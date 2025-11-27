@@ -7,11 +7,12 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Adapters
         GetInstrumentsHelper getInstrumentsHelper) 
         : IInvestApiClientAdapter
     {
-        public async Task<List<Instrument>> GetInstrumentsAsync()
-        {
-            var shares = await getInstrumentsHelper.GetSharesAsync();
-
-            return [.. shares];
-        }
+        public async Task<List<Instrument>> GetInstrumentsAsync() => 
+            [
+                ..await getInstrumentsHelper.GetSharesAsync(),
+                ..await getInstrumentsHelper.GetFuturesAsync(),
+                ..await getInstrumentsHelper.GetBondsAsync(),
+                ..await getInstrumentsHelper.GetIndexesAsync()
+            ];
     }
 }
