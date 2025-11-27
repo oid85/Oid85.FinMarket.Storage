@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Hangfire;
 using Oid85.FinMarket.Storage.Application.Extensions;
 using Oid85.FinMarket.Storage.Common.Converters;
 using Oid85.FinMarket.Storage.Common.KnownConstants;
@@ -24,8 +25,10 @@ namespace Oid85.FinMarket.Storage.WebHost
             builder.Services.ConfigureLogger();
             builder.Services.ConfigureSwagger(builder.Configuration);
             builder.Services.ConfigureCors(builder.Configuration);
+            builder.Services.ConfigureHangfire();
             builder.Services.ConfigureApplicationServices();
-            builder.Services.ConfigureInfrastructure(builder.Configuration);
+            builder.Services.ConfigureDatabase(builder.Configuration);
+            builder.Services.ConfigureInvestApiClient(builder.Configuration);
 
             builder.Services.AddWindowsService(options =>
             {
@@ -50,6 +53,10 @@ namespace Oid85.FinMarket.Storage.WebHost
                 options.RoutePrefix = "";
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Api v1");
             });
+
+            app.UseHangfireDashboard("/dashboard");
+
+            await app.RegisterHangfireJobs(builder.Configuration);
 
             app.MapControllers();
 

@@ -14,5 +14,10 @@ namespace Oid85.FinMarket.Storage.Application.Interfaces.Services
         /// <param name="request"></param>
         /// <returns></returns>
         Task<GetInstrumentListResponse> GetInstrumentListAsync(GetInstrumentListRequest request);
+
+        /// <summary>
+        /// Загрузить инструменты
+        /// </summary>
+        Task LoadInstrumentsAsync();
     }
 }

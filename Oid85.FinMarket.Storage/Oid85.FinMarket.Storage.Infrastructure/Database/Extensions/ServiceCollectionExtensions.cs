@@ -2,8 +2,11 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Oid85.FinMarket.Storage.Application.Interfaces.Adapters;
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
 using Oid85.FinMarket.Storage.Common.KnownConstants;
+using Oid85.FinMarket.Storage.Common.Utils;
+using Oid85.FinMarket.Storage.Infrastructure.Adapters;
 using Oid85.FinMarket.Storage.Infrastructure.Database;
 using Oid85.FinMarket.Storage.Infrastructure.Database.Repositories;
 
@@ -11,7 +14,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static void ConfigureInfrastructure(
+    public static void ConfigureDatabase(
         this IServiceCollection services,
         IConfiguration configuration)
     {    
@@ -26,6 +29,21 @@ public static class ServiceCollectionExtensions
                 .EnableServiceProviderCaching(false), poolSize: 32);
 
         services.AddTransient<IInstrumentRepository, InstrumentRepository>();
+
+        services.AddTransient<GetInstrumentsHelper>();
+
+        services.AddTransient<IInvestApiClientAdapter, InvestApiClientAdapter>();
+    }
+
+    public static void ConfigureInvestApiClient(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddInvestApiClient((_, settings) =>
+        {
+            settings.AccessToken = StringUtils.Base64Decode(
+                configuration.GetValue<string>(KnownSettingsKeys.TinkoffToken)!);
+        });
     }
 
     public static async Task ApplyMigrations(this IHost host)

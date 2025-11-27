@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Any;
+﻿using Hangfire;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using NLog;
 using ILogger = NLog.ILogger;
@@ -53,6 +54,13 @@ public static class ServiceCollectionExtensions
                 builder.AllowCredentials();
             });
         });
+    }
+
+    public static void ConfigureHangfire(
+    this IServiceCollection services)
+    {
+        services.AddHangfire(config => config.UseInMemoryStorage());
+        services.AddHangfireServer();
     }
 
     private static string GetXmlCommentsPath()
