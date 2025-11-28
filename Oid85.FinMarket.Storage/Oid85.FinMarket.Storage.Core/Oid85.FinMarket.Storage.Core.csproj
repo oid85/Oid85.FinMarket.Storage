@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Requests\" />
+    <Folder Include="Responses\" />
   </ItemGroup>
 
 </Project>

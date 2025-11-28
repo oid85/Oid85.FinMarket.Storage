@@ -4,12 +4,14 @@ using Oid85.FinMarket.Storage.Application.Interfaces.Services;
 
 namespace Oid85.FinMarket.Storage.Application.Services
 {
+    /// <inheritdoc />
     public class CandleService (
         IInvestApiClientAdapter investApiClientAdapter,
         IInstrumentRepository instrumentRepository,
         ICandleRepository candleRepository)
         : ICandleService
     {
+        /// <inheritdoc />
         public async Task LoadCandlesAsync()
         {
             var instruments = await instrumentRepository.GetActiveInstrumentsAsync();

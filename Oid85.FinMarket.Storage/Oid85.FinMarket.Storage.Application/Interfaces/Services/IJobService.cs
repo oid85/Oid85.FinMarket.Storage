@@ -1,10 +1,18 @@
-﻿using Oid85.FinMarket.Storage.Core.Responses;
-
-namespace Oid85.FinMarket.Storage.Application.Interfaces.Services
+﻿namespace Oid85.FinMarket.Storage.Application.Interfaces.Services
 {
+    /// <summary>
+    /// Сервис работы с запланированными задачами
+    /// </summary>
     public interface IJobService
     {
-        Task<LoadCandlesResponse> LoadCandlesAsync();
-        Task<LoadInstrumentsResponse> LoadInstrumentsAsync();
+        /// <summary>
+        /// Загрузить свечи
+        /// </summary>
+        Task LoadCandlesAsync();
+
+        /// <summary>
+        /// Загрузить инструменты
+        /// </summary>
+        Task LoadInstrumentsAsync();
     }
 }

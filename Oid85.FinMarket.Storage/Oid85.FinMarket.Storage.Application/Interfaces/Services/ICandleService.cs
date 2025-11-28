@@ -6,6 +6,9 @@ namespace Oid85.FinMarket.Storage.Application.Interfaces.Services
     /// </summary>
     public interface ICandleService
     {
+        /// <summary>
+        /// Загрузить свечи
+        /// </summary>
         Task LoadCandlesAsync();
     }
 }

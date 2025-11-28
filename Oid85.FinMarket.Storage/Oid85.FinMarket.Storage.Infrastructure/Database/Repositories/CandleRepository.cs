@@ -5,10 +5,12 @@ using Oid85.FinMarket.Storage.Infrastructure.Database.Entities;
 
 namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
 {
+    /// <inheritdoc/>
     public class CandleRepository(
         IDbContextFactory<FinMarketContext> contextFactory)
         : ICandleRepository
     {
+        /// <inheritdoc/>
         public async Task AddAsync(List<Candle> candles)
         {
             await using var context = await contextFactory.CreateDbContextAsync();
@@ -40,6 +42,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
             await context.SaveChangesAsync();
         }
 
+        /// <inheritdoc/>
         public async Task AddForceAsync(List<Candle> candles)
         {
             await using var context = await contextFactory.CreateDbContextAsync();
@@ -62,6 +65,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
             await context.SaveChangesAsync();
         }
 
+        /// <inheritdoc/>
         public async Task<Candle?> GetLastCandleByTickerAsync(string ticker)
         {
             await using var context = await contextFactory.CreateDbContextAsync();
