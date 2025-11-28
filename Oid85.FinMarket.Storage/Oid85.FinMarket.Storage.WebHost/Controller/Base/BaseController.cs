@@ -8,16 +8,9 @@ namespace Oid85.FinMarket.Storage.WebHost.Controller.Base;
 public abstract class BaseController : ControllerBase
 {
     [ApiExplorerSettings(IgnoreApi = true)]
-    protected async Task<IActionResult> GetResponseAsync<TData, TResult>(Func<Task> mainLogic) =>
-        await RunBusinessLogic<TData, BaseResponse<TData>>(async () =>
-        {
-            await mainLogic();
-            return Ok(new BaseResponse<TData>());
-        });
-
-    [ApiExplorerSettings(IgnoreApi = true)]
     protected async Task<IActionResult> GetResponseAsync<TData, TResult>(
-        Func<Task<TData>> mainLogic, Func<TData, TResult> mapping)
+        Func<Task<TData>> mainLogic, 
+        Func<TData, TResult> mapping)
         where TResult : BaseResponse<TData>, new() =>
         await RunBusinessLogic<TData, TResult>(async () =>
         {
@@ -25,7 +18,8 @@ public abstract class BaseController : ControllerBase
             return Ok(mapping(data));
         });
 
-    private async Task<IActionResult> RunBusinessLogic<TData, TResult>(Func<Task<IActionResult>> logic)
+    private async Task<IActionResult> RunBusinessLogic<TData, TResult>(
+        Func<Task<IActionResult>> logic)
         where TResult : BaseResponse<TData>, new()
     {
         try

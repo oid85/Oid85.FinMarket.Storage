@@ -63,8 +63,6 @@ public static class ServiceCollectionExtensions
         services.AddHangfireServer();
     }
 
-    private static string GetXmlCommentsPath()
-    {
-        return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SwaggerTest.XML");
-    }
+    private static string GetXmlCommentsPath() => 
+        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SwaggerTest.XML");
 }

@@ -10,14 +10,32 @@ namespace Oid85.FinMarket.Storage.Application.Services
     {
         public async Task<LoadCandlesResponse> LoadCandlesAsync()
         {
-            await candleService.LoadCandlesAsync();
-            return new();
+            try
+            {
+                await candleService.LoadCandlesAsync();
+            }
+
+            catch
+            {
+                return new LoadCandlesResponse { Result = false };
+            }
+
+            return new LoadCandlesResponse { Result = true };
         }
 
         public async Task<LoadInstrumentsResponse> LoadInstrumentsAsync()
         {
-            await instrumentService.LoadInstrumentsAsync();
-            return new();
+            try
+            {
+                await instrumentService.LoadInstrumentsAsync();
+            }
+
+            catch
+            {
+                return new LoadInstrumentsResponse { Result = false };
+            }
+
+            return new LoadInstrumentsResponse { Result = true };
         }
     }
 }

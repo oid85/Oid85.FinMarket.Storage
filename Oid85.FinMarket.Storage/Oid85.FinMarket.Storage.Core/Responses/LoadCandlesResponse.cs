@@ -2,5 +2,6 @@
 {
     public class LoadCandlesResponse
     {
+        public bool Result { get; set; }
     }
 }

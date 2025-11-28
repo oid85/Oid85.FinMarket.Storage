@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Oid85.FinMarket.Storage.Application.Interfaces.Services;
 using Oid85.FinMarket.Storage.Core;
-using Oid85.FinMarket.Storage.Core.Requests;
 using Oid85.FinMarket.Storage.Core.Responses;
 using Oid85.FinMarket.Storage.WebHost.Controller.Base;
 
@@ -25,7 +24,7 @@ public class JobsController(
     [ProducesResponseType(typeof(BaseResponse<LoadInstrumentsResponse>), StatusCodes.Status500InternalServerError)]
     public Task<IActionResult> LoadInstrumentsAsync() =>
         GetResponseAsync(
-            () => jobService.LoadInstrumentsAsync(),
+            jobService.LoadInstrumentsAsync,
             result => new BaseResponse<LoadInstrumentsResponse> { Result = result });
 
     /// <summary>
@@ -37,6 +36,6 @@ public class JobsController(
     [ProducesResponseType(typeof(BaseResponse<LoadCandlesResponse>), StatusCodes.Status500InternalServerError)]
     public Task<IActionResult> LoadCandlesAsync() =>
         GetResponseAsync(
-            () => jobService.LoadCandlesAsync(),
+            jobService.LoadCandlesAsync,
             result => new BaseResponse<LoadCandlesResponse> { Result = result });
 }
