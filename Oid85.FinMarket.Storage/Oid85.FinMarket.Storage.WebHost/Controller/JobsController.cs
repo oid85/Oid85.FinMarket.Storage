@@ -20,11 +20,23 @@ public class JobsController(
     /// Загрузить инструменты
     /// </summary>
     [HttpPost("load-instruments")]
-    [ProducesResponseType(typeof(BaseResponse<LoadInstrumentResponse>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(BaseResponse<LoadInstrumentResponse>), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(BaseResponse<LoadInstrumentResponse>), StatusCodes.Status500InternalServerError)]
-    public Task<IActionResult> GetInstrumentListAsync() =>
+    [ProducesResponseType(typeof(BaseResponse<LoadInstrumentsResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResponse<LoadInstrumentsResponse>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(BaseResponse<LoadInstrumentsResponse>), StatusCodes.Status500InternalServerError)]
+    public Task<IActionResult> LoadInstrumentsAsync() =>
         GetResponseAsync(
             () => jobService.LoadInstrumentsAsync(),
-            result => new BaseResponse<LoadInstrumentResponse> { Result = result });
+            result => new BaseResponse<LoadInstrumentsResponse> { Result = result });
+
+    /// <summary>
+    /// Загрузить свечи
+    /// </summary>
+    [HttpPost("load-candles")]
+    [ProducesResponseType(typeof(BaseResponse<LoadCandlesResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResponse<LoadCandlesResponse>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(BaseResponse<LoadCandlesResponse>), StatusCodes.Status500InternalServerError)]
+    public Task<IActionResult> LoadCandlesAsync() =>
+        GetResponseAsync(
+            () => jobService.LoadCandlesAsync(),
+            result => new BaseResponse<LoadCandlesResponse> { Result = result });
 }

@@ -15,6 +15,7 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services)
     {
         services.AddTransient<IInstrumentService, InstrumentService>();
+        services.AddTransient<ICandleService, CandleService>();
         services.AddTransient<IJobService, JobService>();
     }
 
@@ -27,6 +28,7 @@ public static class ServiceCollectionExtensions
         var jobService = scope.ServiceProvider.GetRequiredService<IJobService>();
 
         RegisterJob(KnownJobs.LoadInstruments, () => jobService.LoadInstrumentsAsync());
+        RegisterJob(KnownJobs.LoadCandles, () => jobService.LoadCandlesAsync());
 
         void RegisterJob(string configurationSection, Expression<Func<Task>> methodCall)
         {

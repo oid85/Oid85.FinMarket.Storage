@@ -23,6 +23,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
             entity = new InstrumentEntity
             {
                 Id = Guid.NewGuid(),
+                InstrumentId = instrument.InstrumentId,
                 Ticker = instrument.Ticker,
                 Name = instrument.Name,
                 Type = instrument.Type
@@ -32,6 +33,31 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
             await context.SaveChangesAsync();
 
             return entity.Id;
+        }
+
+        public async Task<List<Instrument>?> GetActiveInstrumentsAsync()
+        {
+            await using var context = await contextFactory.CreateDbContextAsync();
+
+            var entities = await context.InstrumentEntities.Where(x => x.IsActive).ToListAsync();
+
+            if (entities is null)
+                return null;
+
+            var models = entities
+                .Select(x => 
+                    new Instrument
+                    {
+                        Id = x.Id,
+                        InstrumentId = x.InstrumentId,
+                        Ticker = x.Ticker,
+                        Name = x.Name,
+                        Type = x.Type,
+                        IsActive = x.IsActive
+                    })
+                .ToList();
+
+            return models;
         }
     }
 }

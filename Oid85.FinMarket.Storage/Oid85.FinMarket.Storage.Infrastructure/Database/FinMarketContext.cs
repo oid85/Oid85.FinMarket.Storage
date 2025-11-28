@@ -8,6 +8,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database;
 public class FinMarketContext(DbContextOptions<FinMarketContext> options) : DbContext(options)
 {
     public DbSet<InstrumentEntity> InstrumentEntities { get; set; }
+    public DbSet<CandleEntity> CandleEntities { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

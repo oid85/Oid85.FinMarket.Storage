@@ -4,6 +4,7 @@ namespace Oid85.FinMarket.Storage.Application.Interfaces.Services
 {
     public interface IJobService
     {
-        Task<LoadInstrumentResponse> LoadInstrumentsAsync();
+        Task<LoadCandlesResponse> LoadCandlesAsync();
+        Task<LoadInstrumentsResponse> LoadInstrumentsAsync();
     }
 }

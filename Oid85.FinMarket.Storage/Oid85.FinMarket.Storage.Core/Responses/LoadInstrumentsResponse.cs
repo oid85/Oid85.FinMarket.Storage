@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Oid85.FinMarket.Storage.Core.Responses
 {
-    public class LoadInstrumentResponse
+    public class LoadInstrumentsResponse
     {
     }
 }

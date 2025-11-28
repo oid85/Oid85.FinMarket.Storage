@@ -8,6 +8,11 @@ namespace Oid85.FinMarket.Storage.Core.Models
     public class Instrument : BaseModel
     {
         /// <summary>
+        /// Идентификатор инструмента
+        /// </summary>
+        public Guid InstrumentId { get; set; }
+
+        /// <summary>
         /// Тикер
         /// </summary>
         public string Ticker { get; set; }

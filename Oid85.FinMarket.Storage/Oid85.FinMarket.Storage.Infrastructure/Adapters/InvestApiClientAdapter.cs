@@ -4,9 +4,13 @@ using Oid85.FinMarket.Storage.Core.Models;
 namespace Oid85.FinMarket.Storage.Infrastructure.Adapters
 {
     public class InvestApiClientAdapter(
-        GetInstrumentsHelper getInstrumentsHelper) 
+        GetInstrumentsHelper getInstrumentsHelper,
+        GetCandlesHelper getCandlesHelper) 
         : IInvestApiClientAdapter
     {
+        public Task<List<Candle>> GetCandleAsync(Guid instrumentId, DateOnly from, DateOnly to) =>
+            getCandlesHelper.GetCandlesAsync(instrumentId, from, to);
+
         public async Task<List<Instrument>> GetInstrumentsAsync() => 
             [
                 ..await getInstrumentsHelper.GetSharesAsync(),

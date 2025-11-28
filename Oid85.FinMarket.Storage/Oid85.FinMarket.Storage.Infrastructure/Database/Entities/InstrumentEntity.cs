@@ -8,6 +8,11 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Entities
     public class InstrumentEntity : BaseEntity
     {
         /// <summary>
+        /// Идентификатор инструмента
+        /// </summary>
+        public Guid InstrumentId { get; set; }
+
+        /// <summary>
         /// Тикер
         /// </summary>
         public string Ticker { get; set; }

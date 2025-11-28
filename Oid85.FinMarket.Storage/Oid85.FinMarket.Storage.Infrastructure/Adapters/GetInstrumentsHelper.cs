@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
-using NLog;
+﻿using NLog;
 using Oid85.FinMarket.Storage.Common.KnownConstants;
 using Tinkoff.InvestApi;
 using Tinkoff.InvestApi.V1;
@@ -31,6 +30,7 @@ public class GetInstrumentsHelper(
             {
                 var instrument = new Instrument
                 {
+                    InstrumentId = Guid.Parse(tinkoffInstrument.Uid),
                     Ticker = tinkoffInstrument.Ticker,
                     Name = tinkoffInstrument.Name,
                     Type = KnownInstrumentTypes.Share
@@ -64,6 +64,7 @@ public class GetInstrumentsHelper(
             {
                 var instrument = new Instrument
                 {
+                    InstrumentId = Guid.Parse(tinkoffInstrument.Uid),
                     Ticker = tinkoffInstrument.Ticker,
                     Name = tinkoffInstrument.Name,
                     Type = KnownInstrumentTypes.Future
@@ -99,6 +100,7 @@ public class GetInstrumentsHelper(
             {
                 var instrument = new Instrument
                 {
+                    InstrumentId = Guid.Parse(tinkoffInstrument.Uid),
                     Ticker = tinkoffInstrument.Ticker,
                     Name = tinkoffInstrument.Name,
                     Type = KnownInstrumentTypes.Bond
@@ -133,6 +135,7 @@ public class GetInstrumentsHelper(
             {
                 var instrument = new Instrument
                 {
+                    InstrumentId = Guid.Parse(tinkoffInstrument.Uid),
                     Ticker = tinkoffInstrument.Ticker,
                     Name = tinkoffInstrument.Name,
                     Type = KnownInstrumentTypes.Index

@@ -4,9 +4,17 @@ using Oid85.FinMarket.Storage.Core.Responses;
 namespace Oid85.FinMarket.Storage.Application.Services
 {
     public class JobService(
-        IInstrumentService instrumentService) : IJobService
+        IInstrumentService instrumentService,
+        ICandleService candleService) 
+        : IJobService
     {
-        public async Task<LoadInstrumentResponse> LoadInstrumentsAsync()
+        public async Task<LoadCandlesResponse> LoadCandlesAsync()
+        {
+            await candleService.LoadCandlesAsync();
+            return new();
+        }
+
+        public async Task<LoadInstrumentsResponse> LoadInstrumentsAsync()
         {
             await instrumentService.LoadInstrumentsAsync();
             return new();

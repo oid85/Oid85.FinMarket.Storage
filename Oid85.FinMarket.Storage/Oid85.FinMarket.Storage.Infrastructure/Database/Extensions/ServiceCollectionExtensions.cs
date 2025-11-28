@@ -29,8 +29,10 @@ public static class ServiceCollectionExtensions
                 .EnableServiceProviderCaching(false), poolSize: 32);
 
         services.AddTransient<IInstrumentRepository, InstrumentRepository>();
+        services.AddTransient<ICandleRepository, CandleRepository>();
 
         services.AddTransient<GetInstrumentsHelper>();
+        services.AddTransient<GetCandlesHelper>();
 
         services.AddTransient<IInvestApiClientAdapter, InvestApiClientAdapter>();
     }
