@@ -1,6 +1,9 @@
 ﻿using Oid85.FinMarket.Storage.Application.Interfaces.Adapters;
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
 using Oid85.FinMarket.Storage.Application.Interfaces.Services;
+using Oid85.FinMarket.Storage.Core.Models;
+using Oid85.FinMarket.Storage.Core.Requests;
+using Oid85.FinMarket.Storage.Core.Responses;
 
 namespace Oid85.FinMarket.Storage.Application.Services
 {
@@ -11,6 +14,31 @@ namespace Oid85.FinMarket.Storage.Application.Services
         ICandleRepository candleRepository)
         : ICandleService
     {
+        /// <inheritdoc />
+        public async Task<GetCandleListResponse> GetCandleListAsync(GetCandleListRequest request)
+        {
+            var candles = await candleRepository.GetCandlesAsync(request.Ticker, request.From, request.To);
+
+            if (candles is null)
+                return new GetCandleListResponse { Candles = [] };
+
+            return new GetCandleListResponse 
+            { 
+                Candles = candles
+                .Select(x =>
+                new GetCandleListItemResponse
+                {
+                    Open = x.Open,
+                    Close = x.Close,
+                    Low = x.Low,
+                    High = x.High,
+                    Date = x.Date,
+                    Volume = x.Volume
+                })
+                .ToList()
+            };
+        }
+
         /// <inheritdoc />
         public async Task LoadCandlesAsync()
         {

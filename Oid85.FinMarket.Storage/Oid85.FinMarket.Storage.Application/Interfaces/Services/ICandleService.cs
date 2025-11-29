@@ -1,4 +1,7 @@
 ﻿
+using Oid85.FinMarket.Storage.Core.Requests;
+using Oid85.FinMarket.Storage.Core.Responses;
+
 namespace Oid85.FinMarket.Storage.Application.Interfaces.Services
 {
     /// <summary>
@@ -6,6 +9,11 @@ namespace Oid85.FinMarket.Storage.Application.Interfaces.Services
     /// </summary>
     public interface ICandleService
     {
+        /// <summary>
+        /// Получить свечи
+        /// </summary>
+        Task<GetCandleListResponse> GetCandleListAsync(GetCandleListRequest request);
+
         /// <summary>
         /// Загрузить свечи
         /// </summary>

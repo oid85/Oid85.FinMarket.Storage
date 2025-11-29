@@ -2,6 +2,7 @@
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
 using Oid85.FinMarket.Storage.Core.Models;
 using Oid85.FinMarket.Storage.Infrastructure.Database.Entities;
+using static Grpc.Core.Metadata;
 
 namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
 {
@@ -63,6 +64,40 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
 
             await context.AddRangeAsync(entities);
             await context.SaveChangesAsync();
+        }
+
+        /// <inheritdoc/>
+        public async Task<List<Candle>> GetCandlesAsync(string ticker, DateOnly from, DateOnly to)
+        {
+            await using var context = await contextFactory.CreateDbContextAsync();
+
+            var entities = await context.CandleEntities
+                .Where(x => x.Ticker == ticker)
+                .Where(x => x.Date >= from)
+                .Where(x => x.Date <= to)
+                .OrderBy(x => x.Date)
+                .ToListAsync();
+
+            if (entities is null)
+                return [];
+
+            var models = entities
+                .Select(x =>
+                new Candle
+                {
+                    Id = x.Id,
+                    Ticker = x.Ticker,
+                    Open = x.Open,
+                    Close = x.Close,
+                    Low = x.Low,
+                    High = x.High,
+                    Date = x.Date,
+                    Ticks = x.Ticks,
+                    Volume = x.Volume
+                })
+                .ToList();
+
+            return models;
         }
 
         /// <inheritdoc/>
