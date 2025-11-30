@@ -1,11 +1,12 @@
-﻿using NLog;
+﻿using Google.Protobuf.WellKnownTypes;
+using NLog;
 using Oid85.FinMarket.Storage.Common.KnownConstants;
 using Tinkoff.InvestApi;
 using Tinkoff.InvestApi.V1;
 using Instrument = Oid85.FinMarket.Storage.Core.Models.Instrument;
-using TinkoffShare = Tinkoff.InvestApi.V1.Share;
-using TinkoffFuture = Tinkoff.InvestApi.V1.Future;
 using TinkoffBond = Tinkoff.InvestApi.V1.Bond;
+using TinkoffFuture = Tinkoff.InvestApi.V1.Future;
+using TinkoffShare = Tinkoff.InvestApi.V1.Share;
 
 namespace Oid85.FinMarket.Storage.Infrastructure.Adapters;
 
@@ -22,7 +23,7 @@ public class GetInstrumentsHelper(
             await Task.Delay(DelayInMilliseconds);
             
             List<TinkoffShare> tinkoffInstruments = (await client.Instruments.SharesAsync()).Instruments
-                .Where(x => x.CountryOfRisk.ToLower() == "ru").ToList(); 
+                .Where(x => x.CountryOfRisk.Equals(KnownCountryCodes.Ru, StringComparison.OrdinalIgnoreCase)).ToList(); 
 
             var instruments = new List<Instrument>();
 
@@ -56,7 +57,7 @@ public class GetInstrumentsHelper(
             await Task.Delay(DelayInMilliseconds);
 
             List<TinkoffFuture> tinkoffInstruments = (await client.Instruments.FuturesAsync()).Instruments
-                .Where(x => x.CountryOfRisk.ToLower() == "ru").ToList();
+                .Where(x => x.CountryOfRisk.Equals(KnownCountryCodes.Ru, StringComparison.OrdinalIgnoreCase)).ToList();
 
             var instruments = new List<Instrument>();
 
@@ -90,7 +91,7 @@ public class GetInstrumentsHelper(
             await Task.Delay(DelayInMilliseconds);
 
             List<TinkoffBond> tinkoffInstruments = (await client.Instruments.BondsAsync()).Instruments
-                .Where(x => x.CountryOfRisk.ToLower() == "ru")
+                .Where(x => x.CountryOfRisk.Equals(KnownCountryCodes.Ru, StringComparison.OrdinalIgnoreCase))
                 .Where(x => x.RiskLevel == RiskLevel.Low || x.RiskLevel == RiskLevel.Moderate)
                 .ToList();
 
@@ -103,6 +104,7 @@ public class GetInstrumentsHelper(
                     InstrumentId = Guid.Parse(tinkoffInstrument.Uid),
                     Ticker = tinkoffInstrument.Ticker,
                     Name = tinkoffInstrument.Name,
+                    MaturityDate = TimestampToDateOnly(tinkoffInstrument.MaturityDate),
                     Type = KnownInstrumentTypes.Bond
                 };
 
@@ -153,4 +155,7 @@ public class GetInstrumentsHelper(
             return [];
         }
     }
+
+    private static DateOnly TimestampToDateOnly(Timestamp timestamp) =>
+        timestamp is null ? DateOnly.MinValue : DateOnly.FromDateTime(timestamp.ToDateTime());
 }

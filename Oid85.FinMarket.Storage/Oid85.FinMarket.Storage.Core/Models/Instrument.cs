@@ -31,5 +31,10 @@ namespace Oid85.FinMarket.Storage.Core.Models
         /// Тип
         /// </summary>
         public string Type { get; set; }
+
+        /// <summary>
+        /// Дата погашения
+        /// </summary>
+        public DateOnly? MaturityDate { get; set; } = null;
     }
 }

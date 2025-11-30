@@ -1,4 +1,5 @@
-﻿using Oid85.FinMarket.Storage.Infrastructure.Database.Entities.Base;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Oid85.FinMarket.Storage.Infrastructure.Database.Entities.Base;
 
 namespace Oid85.FinMarket.Storage.Infrastructure.Database.Entities
 {
@@ -31,5 +32,11 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Entities
         /// Тип
         /// </summary>
         public string Type { get; set; }
+
+        /// <summary>
+        /// Дата погашения
+        /// </summary>
+        [Column(TypeName = "date")]
+        public DateOnly? MaturityDate { get; set; } = null;
     }
 }

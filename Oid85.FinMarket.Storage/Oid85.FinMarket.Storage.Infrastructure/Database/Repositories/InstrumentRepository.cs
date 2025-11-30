@@ -26,6 +26,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                 InstrumentId = instrument.InstrumentId,
                 Ticker = instrument.Ticker,
                 Name = instrument.Name,
+                MaturityDate = instrument.MaturityDate,
                 Type = instrument.Type
             };
 
