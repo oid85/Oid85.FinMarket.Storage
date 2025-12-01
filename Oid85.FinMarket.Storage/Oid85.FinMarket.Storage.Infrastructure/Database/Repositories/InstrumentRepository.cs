@@ -54,6 +54,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                         Ticker = x.Ticker,
                         Name = x.Name,
                         Type = x.Type,
+                        MaturityDate = x.MaturityDate,
                         IsActive = x.IsActive
                     })
                 .ToList();
