@@ -7,9 +7,10 @@ using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
 using Oid85.FinMarket.Storage.Common.KnownConstants;
 using Oid85.FinMarket.Storage.Common.Utils;
 using Oid85.FinMarket.Storage.Infrastructure.Adapters;
+using Oid85.FinMarket.Storage.Infrastructure.Database;
 using Oid85.FinMarket.Storage.Infrastructure.Database.Repositories;
 
-namespace Oid85.FinMarket.Storage.Infrastructure.Database.Extensions;
+namespace Oid85.FinMarket.Storage.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -19,21 +20,16 @@ public static class ServiceCollectionExtensions
     {    
         services.AddDbContextPool<FinMarketContext>((serviceProvider, options) =>
         {  
-            options.UseNpgsql(configuration.GetValue<string>(KnownSettingsKeys.PostgresAthleticConnectionString)!);
+            options.UseNpgsql(configuration.GetValue<string>(KnownSettingsKeys.PostgresFinMarketStorageConnectionString)!);
         });
 
         services.AddPooledDbContextFactory<FinMarketContext>(options =>
             options
-                .UseNpgsql(configuration.GetValue<string>(KnownSettingsKeys.PostgresAthleticConnectionString)!)
+                .UseNpgsql(configuration.GetValue<string>(KnownSettingsKeys.PostgresFinMarketStorageConnectionString)!)
                 .EnableServiceProviderCaching(false), poolSize: 32);
 
         services.AddTransient<IInstrumentRepository, InstrumentRepository>();
         services.AddTransient<ICandleRepository, CandleRepository>();
-
-        services.AddTransient<GetInstrumentsHelper>();
-        services.AddTransient<GetCandlesHelper>();
-
-        services.AddTransient<IInvestApiClientAdapter, InvestApiClientAdapter>();
     }
 
     public static void ConfigureInvestApiClient(
@@ -45,6 +41,11 @@ public static class ServiceCollectionExtensions
             settings.AccessToken = StringUtils.Base64Decode(
                 configuration.GetValue<string>(KnownSettingsKeys.TinkoffToken)!);
         });
+
+        services.AddTransient<GetInstrumentsHelper>();
+        services.AddTransient<GetCandlesHelper>();
+
+        services.AddTransient<IInvestApiClientAdapter, InvestApiClientAdapter>();
     }
 
     public static async Task ApplyMigrations(this IHost host)

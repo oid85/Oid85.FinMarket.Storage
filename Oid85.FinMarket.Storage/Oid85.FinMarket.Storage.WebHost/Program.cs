@@ -3,7 +3,7 @@ using Hangfire;
 using Oid85.FinMarket.Storage.Application.Extensions;
 using Oid85.FinMarket.Storage.Common.Converters;
 using Oid85.FinMarket.Storage.Common.KnownConstants;
-using Oid85.FinMarket.Storage.Infrastructure.Database.Extensions;
+using Oid85.FinMarket.Storage.Infrastructure.Extensions;
 using Oid85.FinMarket.Storage.WebHost.Extensions;
 
 namespace Oid85.FinMarket.Storage.WebHost
