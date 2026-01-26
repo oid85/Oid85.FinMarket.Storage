@@ -13,17 +13,17 @@ namespace Oid85.FinMarket.Storage.Application.Services
         /// <inheritdoc/>
         public async Task<CreateOrUpdateFundamentalParameterResponse> CreateOrUpdateFundamentalParameterAsync(CreateOrUpdateFundamentalParameterRequest request)
         {
-            var model = new FundamentalParameter
-            {
-                Ticker = request.Ticker,
-                Type = request.Type,
-                Period = request.Period,
-                Value = request.Value
-            };
+            foreach (var item in request.FundamentalParameters)
+                await fundamentalParameterRepository.CreateOrUpdateFundamentalParameterAsync(
+                    new FundamentalParameter
+                    {
+                        Ticker = item.Ticker,
+                        Type = item.Type,
+                        Period = item.Period,
+                        Value = item.Value
+                    });
 
-            var id = await fundamentalParameterRepository.CreateOrUpdateFundamentalParameterAsync(model);
-
-            return new CreateOrUpdateFundamentalParameterResponse { Id = id };
+            return new();
         }
 
         /// <inheritdoc/>

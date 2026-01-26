@@ -2,9 +2,6 @@
 {
     public class CreateOrUpdateFundamentalParameterResponse
     {
-        /// <summary>
-        /// Идентификатор
-        /// </summary>
-        public Guid? Id { get; set; }
+
     }
 }

@@ -2,6 +2,11 @@
 {
     public class CreateOrUpdateFundamentalParameterRequest
     {
+        public List<CreateOrUpdateFundamentalParameterItemRequest> FundamentalParameters { get; set; }
+    }
+
+    public class CreateOrUpdateFundamentalParameterItemRequest
+    {
         /// <summary>
         /// Тикер
         /// </summary>
