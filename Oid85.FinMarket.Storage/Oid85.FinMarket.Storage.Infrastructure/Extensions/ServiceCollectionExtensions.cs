@@ -30,6 +30,7 @@ public static class ServiceCollectionExtensions
 
         services.AddTransient<IInstrumentRepository, InstrumentRepository>();
         services.AddTransient<ICandleRepository, CandleRepository>();
+        services.AddTransient<IFundamentalParameterRepository, FundamentalParameterRepository>();
     }
 
     public static void ConfigureInvestApiClient(
