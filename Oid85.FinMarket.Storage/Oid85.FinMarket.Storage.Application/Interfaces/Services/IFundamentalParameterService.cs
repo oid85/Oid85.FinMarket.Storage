@@ -1,8 +1,7 @@
-﻿using Oid85.FinMarket.Storage.Core.Models;
-using Oid85.FinMarket.Storage.Core.Requests;
+﻿using Oid85.FinMarket.Storage.Core.Requests;
 using Oid85.FinMarket.Storage.Core.Responses;
 
-namespace Oid85.FinMarket.Storage.Application.Interfaces.Repositories
+namespace Oid85.FinMarket.Storage.Application.Interfaces.Services
 {
     /// <summary>
     /// Сервис фундаментальных параметров
@@ -17,7 +16,6 @@ namespace Oid85.FinMarket.Storage.Application.Interfaces.Repositories
         /// <summary>
         /// Получить список фундаментальных параметров
         /// </summary>
-        /// <returns></returns>
         Task<GetFundamentalParameterListResponse> GetFundamentalParameterListAsync(GetFundamentalParameterListRequest request);
     }
 }
