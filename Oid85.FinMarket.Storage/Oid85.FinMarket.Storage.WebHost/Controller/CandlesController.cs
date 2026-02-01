@@ -28,4 +28,17 @@ public class CandlesController(
         GetResponseAsync(
             () => candleService.GetCandleListAsync(request),
             result => new BaseResponse<GetCandleListResponse> { Result = result });
+
+    /// <summary>
+    /// Получить последнюю свечу
+    /// </summary>
+    [HttpPost("last-candle")]
+    [ProducesResponseType(typeof(BaseResponse<GetLastCandleResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResponse<GetLastCandleResponse>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(BaseResponse<GetLastCandleResponse>), StatusCodes.Status500InternalServerError)]
+    public Task<IActionResult> GetLastCandleAsync(
+        [FromBody] GetLastCandleRequest request) =>
+        GetResponseAsync(
+            () => candleService.GetLastCandleAsync(request),
+            result => new BaseResponse<GetLastCandleResponse> { Result = result });
 }

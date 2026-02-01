@@ -100,12 +100,42 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<Candle?> GetLastCandleByTickerAsync(string ticker)
+        public async Task<Candle?> GetLastCandleAsync(string ticker)
         {
             await using var context = await contextFactory.CreateDbContextAsync();
 
             var entity = await context.CandleEntities
                 .Where(x => x.Ticker == ticker)
+                .OrderByDescending(x => x.Ticks)
+                .FirstOrDefaultAsync();
+
+            if (entity is null)
+                return null;
+
+            var model = new Candle
+            {
+                Id = entity.Id,
+                Ticker = entity.Ticker,
+                Open = entity.Open,
+                Close = entity.Close,
+                Low = entity.Low,
+                High = entity.High,
+                Date = entity.Date,
+                Ticks = entity.Ticks,
+                Volume = entity.Volume
+            };
+
+            return model;
+        }
+
+        /// <inheritdoc/>
+        public async Task<Candle?> GetLastCandleAsync(string ticker, DateOnly date)
+        {
+            await using var context = await contextFactory.CreateDbContextAsync();
+
+            var entity = await context.CandleEntities
+                .Where(x => x.Ticker == ticker)
+                .Where(x => x.Date <= date)
                 .OrderByDescending(x => x.Ticks)
                 .FirstOrDefaultAsync();
 

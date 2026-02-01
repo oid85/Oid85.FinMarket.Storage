@@ -1,11 +1,13 @@
-﻿namespace Oid85.FinMarket.Storage.Core.Responses
+﻿using Oid85.FinMarket.Storage.Core.Models;
+
+namespace Oid85.FinMarket.Storage.Core.Responses
 {
-    public class GetCandleListResponse
+    public class GetLastCandleResponse
     {
-        public List<GetCandleListItemResponse> Candles { get; set; }
+        public List<GetLastCandleItemResponse?> Candles { get; set; } = [];
     }
 
-    public class GetCandleListItemResponse
+    public class GetLastCandleItemResponse
     {
         /// <summary>
         /// Дата

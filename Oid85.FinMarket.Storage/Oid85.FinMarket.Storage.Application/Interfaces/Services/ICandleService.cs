@@ -15,6 +15,11 @@ namespace Oid85.FinMarket.Storage.Application.Interfaces.Services
         Task<GetCandleListResponse> GetCandleListAsync(GetCandleListRequest request);
 
         /// <summary>
+        /// Получить последнюю свечу
+        /// </summary>
+        Task<GetLastCandleResponse> GetLastCandleAsync(GetLastCandleRequest request);
+
+        /// <summary>
         /// Загрузить свечи
         /// </summary>
         Task LoadCandlesAsync();

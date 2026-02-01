@@ -26,6 +26,11 @@ namespace Oid85.FinMarket.Storage.Application.Interfaces.Repositories
         /// <summary>
         /// Получить последнюю свечу по тикеру
         /// </summary>
-        Task<Candle?> GetLastCandleByTickerAsync(string ticker);
+        Task<Candle?> GetLastCandleAsync(string ticker);
+
+        /// <summary>
+        /// Получить последнюю свечу по тикеру и дате
+        /// </summary>
+        Task<Candle?> GetLastCandleAsync(string ticker, DateOnly date);
     }
 }

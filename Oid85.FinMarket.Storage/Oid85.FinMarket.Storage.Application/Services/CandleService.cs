@@ -40,6 +40,34 @@ namespace Oid85.FinMarket.Storage.Application.Services
         }
 
         /// <inheritdoc />
+        public async Task<GetLastCandleResponse> GetLastCandleAsync(GetLastCandleRequest request)
+        {
+            var response = new GetLastCandleResponse();
+
+            foreach (var ticker in request.Tickers)
+            {
+                var candle = await candleRepository.GetLastCandleAsync(ticker, request.Date);
+
+                if (candle is null)
+                    response.Candles.Add(null);
+
+                else
+                    response.Candles.Add(
+                        new GetLastCandleItemResponse
+                        {
+                            Open = candle.Open,
+                            Close = candle.Close,
+                            Low = candle.Low,
+                            High = candle.High,
+                            Date = candle.Date,
+                            Volume = candle.Volume
+                        });
+            }
+
+            return response;
+        }
+
+        /// <inheritdoc />
         public async Task LoadCandlesAsync()
         {
             var instruments = await instrumentRepository.GetActiveInstrumentsAsync();
@@ -49,7 +77,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
 
             foreach (var instrument in instruments)
             {
-                var lastCandle = await candleRepository.GetLastCandleByTickerAsync(instrument.Ticker);
+                var lastCandle = await candleRepository.GetLastCandleAsync(instrument.Ticker);
 
                 if (lastCandle is null)
                 {
