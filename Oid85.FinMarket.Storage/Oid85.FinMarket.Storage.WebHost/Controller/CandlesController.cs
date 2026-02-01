@@ -32,7 +32,7 @@ public class CandlesController(
     /// <summary>
     /// Получить последнюю свечу
     /// </summary>
-    [HttpPost("last-candle")]
+    [HttpPost("last")]
     [ProducesResponseType(typeof(BaseResponse<GetLastCandleResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BaseResponse<GetLastCandleResponse>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(BaseResponse<GetLastCandleResponse>), StatusCodes.Status500InternalServerError)]
