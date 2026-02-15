@@ -12,7 +12,7 @@ namespace Oid85.FinMarket.Storage.WebHost.Controller;
 /// </summary>
 [Route("api/consumer-price-indexes")]
 [ApiController]
-public class ConsumerPriceIndexChangeController(
+public class ConsumerPriceIndexController(
     IConsumerPriceIndexChangeService consumerPriceIndexChangeService)
     : BaseController
 {
