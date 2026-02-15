@@ -69,7 +69,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                     })
                 .ToList();
 
-            return models;
+            return models.OrderBy(x => x.Date).ToList();
         }
     }
 }
