@@ -10,6 +10,9 @@ public class FinMarketContext(DbContextOptions<FinMarketContext> options) : DbCo
     public DbSet<InstrumentEntity> InstrumentEntities { get; set; }
     public DbSet<CandleEntity> CandleEntities { get; set; }
     public DbSet<FundamentalParameterEntity> FundamentalParameterEntities { get; set; }
+    public DbSet<ConsumerPriceIndexChangeEntity> ConsumerPriceIndexChangeEntities { get; set; }
+    public DbSet<MonetaryAggregateEntity> MonetaryAggregateEntities { get; set; }
+    public DbSet<KeyRateEntity> KeyRateEntities { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -17,6 +17,9 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IInstrumentService, InstrumentService>();
         services.AddTransient<ICandleService, CandleService>();
         services.AddTransient<IFundamentalParameterService, FundamentalParameterService>();
+        services.AddTransient<IConsumerPriceIndexChangeService, ConsumerPriceIndexChangeService>();
+        services.AddTransient<IMonetaryAggregateService, MonetaryAggregateService>();
+        services.AddTransient<IKeyRateService, KeyRateService>();
         services.AddTransient<IJobService, JobService>();
     }
 

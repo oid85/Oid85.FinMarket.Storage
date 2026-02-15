@@ -5,26 +5,26 @@
 namespace Oid85.FinMarket.Storage.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class _30112025_1 : Migration
+    public partial class _14022026_2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<DateOnly>(
-                name: "MaturityDate",
+            migrationBuilder.RenameColumn(
+                name: "М2Х",
                 schema: "public",
-                table: "InstrumentEntities",
-                type: "date",
-                nullable: true);
+                table: "MonetaryAggregateEntities",
+                newName: "M2X");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "MaturityDate",
+            migrationBuilder.RenameColumn(
+                name: "M2X",
                 schema: "public",
-                table: "InstrumentEntities");
+                table: "MonetaryAggregateEntities",
+                newName: "М2Х");
         }
     }
 }

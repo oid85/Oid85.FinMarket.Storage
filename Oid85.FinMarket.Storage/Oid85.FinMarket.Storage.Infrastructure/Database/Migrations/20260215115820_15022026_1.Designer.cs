@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Oid85.FinMarket.Storage.Infrastructure.Database;
@@ -11,9 +12,11 @@ using Oid85.FinMarket.Storage.Infrastructure.Database;
 namespace Oid85.FinMarket.Storage.Infrastructure.Migrations
 {
     [DbContext(typeof(FinMarketContext))]
-    partial class FinMarketContextModelSnapshot : ModelSnapshot
+    [Migration("20260215115820_15022026_1")]
+    partial class _15022026_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

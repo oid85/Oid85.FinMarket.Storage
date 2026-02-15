@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Oid85.FinMarket.Storage.Infrastructure.Database;
@@ -11,9 +12,11 @@ using Oid85.FinMarket.Storage.Infrastructure.Database;
 namespace Oid85.FinMarket.Storage.Infrastructure.Migrations
 {
     [DbContext(typeof(FinMarketContext))]
-    partial class FinMarketContextModelSnapshot : ModelSnapshot
+    [Migration("20260214164346_14022026_2")]
+    partial class _14022026_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,23 +135,6 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("InstrumentEntities", "public");
-                });
-
-            modelBuilder.Entity("Oid85.FinMarket.Storage.Infrastructure.Database.Entities.KeyRateEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
-
-                    b.Property<double?>("Value")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("KeyRateEntities", "public");
                 });
 
             modelBuilder.Entity("Oid85.FinMarket.Storage.Infrastructure.Database.Entities.MonetaryAggregateEntity", b =>

@@ -1,7 +1,6 @@
 ﻿using Oid85.FinMarket.Storage.Application.Interfaces.Adapters;
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
 using Oid85.FinMarket.Storage.Application.Interfaces.Services;
-using Oid85.FinMarket.Storage.Core.Models;
 using Oid85.FinMarket.Storage.Core.Requests;
 using Oid85.FinMarket.Storage.Core.Responses;
 

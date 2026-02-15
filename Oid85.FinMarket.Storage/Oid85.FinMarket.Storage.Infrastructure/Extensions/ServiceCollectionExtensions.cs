@@ -31,6 +31,9 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IInstrumentRepository, InstrumentRepository>();
         services.AddTransient<ICandleRepository, CandleRepository>();
         services.AddTransient<IFundamentalParameterRepository, FundamentalParameterRepository>();
+        services.AddTransient<IConsumerPriceIndexChangeRepository, ConsumerPriceIndexChangeRepository>();
+        services.AddTransient<IMonetaryAggregateRepository, MonetaryAggregateRepository>();
+        services.AddTransient<IKeyRateRepository, KeyRateRepository>();
     }
 
     public static void ConfigureInvestApiClient(

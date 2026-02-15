@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Oid85.FinMarket.Storage.Infrastructure.Database.Entities.Base;
+﻿using Oid85.FinMarket.Storage.Infrastructure.Database.Entities.Base;
 
 namespace Oid85.FinMarket.Storage.Infrastructure.Database.Entities
 {
