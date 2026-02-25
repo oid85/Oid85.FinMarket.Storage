@@ -28,7 +28,8 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     Ticker = x.Ticker,
                     Name = x.Name,
                     Type = x.Type,
-                    MaturityDate = x.MaturityDate
+                    MaturityDate = x.MaturityDate,
+                    CouponQuantityPerYear = x.CouponQuantityPerYear
                 })
                 .ToList()
             };

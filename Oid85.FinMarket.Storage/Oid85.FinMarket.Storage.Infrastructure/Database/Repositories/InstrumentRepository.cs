@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
+using Oid85.FinMarket.Storage.Common.KnownConstants;
 using Oid85.FinMarket.Storage.Core.Models;
 using Oid85.FinMarket.Storage.Infrastructure.Database.Entities;
 
@@ -27,6 +28,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                 Ticker = instrument.Ticker,
                 Name = instrument.Name,
                 MaturityDate = instrument.MaturityDate,
+                CouponQuantityPerYear = instrument.CouponQuantityPerYear,
                 Type = instrument.Type
             };
 
@@ -40,7 +42,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
         {
             await using var context = await contextFactory.CreateDbContextAsync();
 
-            var entities = await context.InstrumentEntities.Where(x => x.IsActive).ToListAsync();
+            var entities = await context.InstrumentEntities.Where(x => x.IsActive && x.Type != KnownInstrumentTypes.Bond).ToListAsync();
 
             if (entities is null)
                 return null;
@@ -55,6 +57,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                         Name = x.Name,
                         Type = x.Type,
                         MaturityDate = x.MaturityDate,
+                        CouponQuantityPerYear = x.CouponQuantityPerYear,
                         IsActive = x.IsActive
                     })
                 .ToList();

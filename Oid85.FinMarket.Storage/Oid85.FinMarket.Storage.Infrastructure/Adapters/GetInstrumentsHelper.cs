@@ -105,6 +105,7 @@ public class GetInstrumentsHelper(
                     Ticker = tinkoffInstrument.Ticker,
                     Name = tinkoffInstrument.Name,
                     MaturityDate = TimestampToDateOnly(tinkoffInstrument.MaturityDate),
+                    CouponQuantityPerYear = tinkoffInstrument.CouponQuantityPerYear,
                     Type = KnownInstrumentTypes.Bond
                 };
 

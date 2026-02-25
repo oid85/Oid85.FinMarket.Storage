@@ -36,5 +36,10 @@ namespace Oid85.FinMarket.Storage.Core.Models
         /// Дата погашения
         /// </summary>
         public DateOnly? MaturityDate { get; set; } = null;
+
+        /// <summary>
+        /// Кол-во купонов в год
+        /// </summary>
+        public int? CouponQuantityPerYear { get; set; }
     }
 }
