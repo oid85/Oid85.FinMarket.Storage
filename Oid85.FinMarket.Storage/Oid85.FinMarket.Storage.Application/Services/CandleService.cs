@@ -1,6 +1,7 @@
 ﻿using Oid85.FinMarket.Storage.Application.Interfaces.Adapters;
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
 using Oid85.FinMarket.Storage.Application.Interfaces.Services;
+using Oid85.FinMarket.Storage.Common.KnownConstants;
 using Oid85.FinMarket.Storage.Core.Requests;
 using Oid85.FinMarket.Storage.Core.Responses;
 
@@ -69,7 +70,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
         /// <inheritdoc />
         public async Task LoadCandlesAsync()
         {
-            var instruments = await instrumentRepository.GetActiveInstrumentsAsync();
+            var instruments = (await instrumentRepository.GetActiveInstrumentsAsync())?.Where(x => x.Type != KnownInstrumentTypes.Bond).ToList();
 
             if (instruments is null)
                 return;

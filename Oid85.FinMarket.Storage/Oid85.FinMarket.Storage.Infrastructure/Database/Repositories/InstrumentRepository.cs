@@ -42,7 +42,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
         {
             await using var context = await contextFactory.CreateDbContextAsync();
 
-            var entities = await context.InstrumentEntities.Where(x => x.IsActive && x.Type != KnownInstrumentTypes.Bond).ToListAsync();
+            var entities = await context.InstrumentEntities.Where(x => x.IsActive).ToListAsync();
 
             if (entities is null)
                 return null;
