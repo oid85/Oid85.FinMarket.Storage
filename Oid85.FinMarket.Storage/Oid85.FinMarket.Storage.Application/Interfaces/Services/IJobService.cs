@@ -6,6 +6,11 @@
     public interface IJobService
     {
         /// <summary>
+        /// Загрузить купоны
+        /// </summary>
+        Task LoadBondCouponsAsync();
+
+        /// <summary>
         /// Загрузить свечи
         /// </summary>
         Task LoadCandlesAsync();
