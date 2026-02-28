@@ -36,7 +36,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                     .FirstOrDefaultAsync(x => x.Date == entity.Date);
 
                 if (existEntity is null)
-                    await context.AddRangeAsync(entity);
+                    await context.AddAsync(entity);
             }
             
             await context.SaveChangesAsync();

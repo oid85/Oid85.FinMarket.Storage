@@ -40,8 +40,6 @@ public class GetBondCouponsHelper(
                             CouponNumber = coupon.CouponNumber,
                             CouponPeriod = coupon.CouponPeriod,
                             CouponDate = TimestampToDateOnly(coupon.CouponDate),
-                            CouponStartDate = TimestampToDateOnly(coupon.CouponStartDate),
-                            CouponEndDate = TimestampToDateOnly(coupon.CouponEndDate),
                             PayOneBond = MoneyValueToDouble(coupon.PayOneBond)
                         };
 

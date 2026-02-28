@@ -34,6 +34,7 @@ public static class ServiceCollectionExtensions
 
         RegisterJob(KnownJobs.LoadInstruments, () => jobService.LoadInstrumentsAsync());
         RegisterJob(KnownJobs.LoadCandles, () => jobService.LoadCandlesAsync());
+        RegisterJob(KnownJobs.BondCoupons, () => jobService.LoadBondCouponsAsync());
 
         void RegisterJob(string configurationSection, Expression<Func<Task>> methodCall)
         {

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Oid85.FinMarket.Storage.Core.Requests
+﻿namespace Oid85.FinMarket.Storage.Core.Requests
 {
     public class GetBondCouponListRequest
     {
+        public string Ticker { get; set; }
+        public DateOnly From { get; set; }
+        public DateOnly To { get; set; }
     }
 }

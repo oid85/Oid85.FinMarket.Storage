@@ -5,10 +5,14 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Adapters
 {
     public class InvestApiClientAdapter(
         GetInstrumentsHelper getInstrumentsHelper,
-        GetCandlesHelper getCandlesHelper) 
+        GetCandlesHelper getCandlesHelper,
+        GetBondCouponsHelper getBondCouponsHelper) 
         : IInvestApiClientAdapter
     {
-        public Task<List<Candle>> GetCandleAsync(Guid instrumentId, DateOnly from, DateOnly to) =>
+        public Task<List<BondCoupon>> GetBondCouponsAsync(List<Instrument> instruments) =>
+            getBondCouponsHelper.GetBondCouponsAsync(instruments);
+
+        public Task<List<Candle>> GetCandlesAsync(Guid instrumentId, DateOnly from, DateOnly to) =>
             getCandlesHelper.GetCandlesAsync(instrumentId, from, to);
 
         public async Task<List<Instrument>> GetInstrumentsAsync() => 

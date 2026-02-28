@@ -35,18 +35,6 @@ public class BondCouponEntity : BaseEntity
     /// </summary>
     [Column("coupon_period")]
     public int CouponPeriod { get; set; }
-
-    /// <summary>
-    /// Начало купонного периода
-    /// </summary>
-    [Column("coupon_start_date", TypeName = "date")]
-    public DateOnly CouponStartDate { get; set; } = DateOnly.MinValue;
-    
-    /// <summary>
-    /// Окончание купонного периода
-    /// </summary>
-    [Column("coupon_end_date", TypeName = "date")]
-    public DateOnly CouponEndDate { get; set; } = DateOnly.MinValue;
     
     /// <summary>
     /// Выплата на одну облигацию

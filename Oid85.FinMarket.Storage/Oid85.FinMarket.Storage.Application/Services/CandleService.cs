@@ -87,7 +87,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     {
                         var from = DateOnly.FromDateTime(new DateTime(currentYear - i, 1, 1));
                         var to = DateOnly.FromDateTime(new DateTime(currentYear - i, 12, 31));
-                        var candles = await investApiClientAdapter.GetCandleAsync(instrument.InstrumentId, from, to);
+                        var candles = await investApiClientAdapter.GetCandlesAsync(instrument.InstrumentId, from, to);
                         
                         candles.ForEach(x => x.Ticker = instrument.Ticker);
                         candles.ForEach(x => x.Ticks = x.Date.ToDateTime(TimeOnly.MinValue).Ticks);
@@ -100,7 +100,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                 {
                     var from = lastCandle.Date;
                     var to = DateOnly.FromDateTime(DateTime.Today);
-                    var candles = await investApiClientAdapter.GetCandleAsync(instrument.InstrumentId, from, to);
+                    var candles = await investApiClientAdapter.GetCandlesAsync(instrument.InstrumentId, from, to);
 
                     candles.ForEach(x => x.Ticker = instrument.Ticker);
                     candles.ForEach(x => x.Ticks = x.Date.ToDateTime(TimeOnly.MinValue).Ticks);

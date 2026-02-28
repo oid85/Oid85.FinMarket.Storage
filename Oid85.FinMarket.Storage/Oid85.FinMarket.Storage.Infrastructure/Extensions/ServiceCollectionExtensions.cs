@@ -49,6 +49,7 @@ public static class ServiceCollectionExtensions
 
         services.AddTransient<GetInstrumentsHelper>();
         services.AddTransient<GetCandlesHelper>();
+        services.AddTransient<GetBondCouponsHelper>();
 
         services.AddTransient<IInvestApiClientAdapter, InvestApiClientAdapter>();
     }
