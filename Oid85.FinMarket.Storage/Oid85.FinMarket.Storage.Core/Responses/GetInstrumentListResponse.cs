@@ -31,5 +31,10 @@
         /// Кол-во купонов в год
         /// </summary>
         public int? CouponQuantityPerYear { get; set; } = null;
+
+        /// <summary>
+        /// НКД
+        /// </summary>
+        public double? Nkd { get; set; } = null;
     }
 }

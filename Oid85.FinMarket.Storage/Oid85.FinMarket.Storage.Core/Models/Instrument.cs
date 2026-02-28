@@ -41,5 +41,10 @@ namespace Oid85.FinMarket.Storage.Core.Models
         /// Кол-во купонов в год
         /// </summary>
         public int? CouponQuantityPerYear { get; set; }
+
+        /// <summary>
+        /// НКД
+        /// </summary>
+        public double? Nkd { get; set; }
     }
 }

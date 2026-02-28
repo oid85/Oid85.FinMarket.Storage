@@ -106,6 +106,7 @@ public class GetInstrumentsHelper(
                     Name = tinkoffInstrument.Name,
                     MaturityDate = TimestampToDateOnly(tinkoffInstrument.MaturityDate),
                     CouponQuantityPerYear = tinkoffInstrument.CouponQuantityPerYear,
+                    Nkd = MoneyValueToDouble(tinkoffInstrument.AciValue),
                     Type = KnownInstrumentTypes.Bond
                 };
 
@@ -159,4 +160,12 @@ public class GetInstrumentsHelper(
 
     private static DateOnly TimestampToDateOnly(Timestamp timestamp) =>
         timestamp is null ? DateOnly.MinValue : DateOnly.FromDateTime(timestamp.ToDateTime());
+
+    private static double MoneyValueToDouble(MoneyValue moneyValue)
+    {
+        if (moneyValue is null)
+            return 0.0;
+
+        return moneyValue.Units + moneyValue.Nano / 1_000_000_000.0;
+    }
 }

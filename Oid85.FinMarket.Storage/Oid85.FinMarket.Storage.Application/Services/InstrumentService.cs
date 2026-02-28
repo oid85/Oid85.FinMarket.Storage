@@ -29,7 +29,8 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     Name = x.Name,
                     Type = x.Type,
                     MaturityDate = x.MaturityDate,
-                    CouponQuantityPerYear = x.CouponQuantityPerYear
+                    CouponQuantityPerYear = x.CouponQuantityPerYear,
+                    Nkd = x.Nkd
                 })
                 .ToList()
             };

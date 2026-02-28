@@ -18,20 +18,28 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
             var entity = await context.InstrumentEntities.FirstOrDefaultAsync(x => x.Ticker == instrument.Ticker);
 
             if (entity is not null)
-                return null;
-
-            entity = new InstrumentEntity
             {
-                Id = Guid.NewGuid(),
-                InstrumentId = instrument.InstrumentId,
-                Ticker = instrument.Ticker,
-                Name = instrument.Name,
-                MaturityDate = instrument.MaturityDate,
-                CouponQuantityPerYear = instrument.CouponQuantityPerYear,
-                Type = instrument.Type
-            };
+                if (instrument.Nkd is not null)
+                    entity.Nkd = instrument.Nkd;
+            }
 
-            await context.AddAsync(entity);
+            else
+            {
+                entity = new InstrumentEntity
+                {
+                    Id = Guid.NewGuid(),
+                    InstrumentId = instrument.InstrumentId,
+                    Ticker = instrument.Ticker,
+                    Name = instrument.Name,
+                    MaturityDate = instrument.MaturityDate,
+                    CouponQuantityPerYear = instrument.CouponQuantityPerYear,
+                    Nkd = instrument.Nkd,
+                    Type = instrument.Type
+                };
+
+                await context.AddAsync(entity);
+            }
+            
             await context.SaveChangesAsync();
 
             return entity.Id;
@@ -57,6 +65,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                         Type = x.Type,
                         MaturityDate = x.MaturityDate,
                         CouponQuantityPerYear = x.CouponQuantityPerYear,
+                        Nkd = x.Nkd,
                         IsActive = x.IsActive
                     })
                 .ToList();
