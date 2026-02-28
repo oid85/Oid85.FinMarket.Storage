@@ -23,6 +23,11 @@ namespace Oid85.FinMarket.Storage.Core.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Сектор
+        /// </summary>
+        public string Sector { get; set; }
+
+        /// <summary>
         /// Флаг активности
         /// </summary>
         public bool IsActive { get; set; }

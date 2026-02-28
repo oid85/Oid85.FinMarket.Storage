@@ -27,6 +27,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                 {
                     Ticker = x.Ticker,
                     Name = x.Name,
+                    Sector = x.Sector,
                     Type = x.Type,
                     MaturityDate = x.MaturityDate,
                     CouponQuantityPerYear = x.CouponQuantityPerYear,

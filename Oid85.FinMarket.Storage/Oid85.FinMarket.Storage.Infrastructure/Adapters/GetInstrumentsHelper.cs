@@ -32,8 +32,9 @@ public class GetInstrumentsHelper(
                 var instrument = new Instrument
                 {
                     InstrumentId = Guid.Parse(tinkoffInstrument.Uid),
-                    Ticker = tinkoffInstrument.Ticker,
+                    Ticker = tinkoffInstrument.Ticker,                    
                     Name = tinkoffInstrument.Name,
+                    Sector = tinkoffInstrument.Sector,
                     Type = KnownInstrumentTypes.Share
                 };
 
@@ -68,6 +69,7 @@ public class GetInstrumentsHelper(
                     InstrumentId = Guid.Parse(tinkoffInstrument.Uid),
                     Ticker = tinkoffInstrument.Ticker,
                     Name = tinkoffInstrument.Name,
+                    Sector = tinkoffInstrument.Sector,
                     Type = KnownInstrumentTypes.Future
                 };
 
@@ -107,6 +109,7 @@ public class GetInstrumentsHelper(
                     MaturityDate = TimestampToDateOnly(tinkoffInstrument.MaturityDate),
                     CouponQuantityPerYear = tinkoffInstrument.CouponQuantityPerYear,
                     Nkd = MoneyValueToDouble(tinkoffInstrument.AciValue),
+                    Sector = tinkoffInstrument.Sector,
                     Type = KnownInstrumentTypes.Bond
                 };
 

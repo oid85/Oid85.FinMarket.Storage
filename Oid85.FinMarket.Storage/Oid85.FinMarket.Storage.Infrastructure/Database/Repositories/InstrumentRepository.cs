@@ -21,6 +21,9 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
             {
                 if (instrument.Nkd is not null)
                     entity.Nkd = instrument.Nkd;
+
+                if (!string.IsNullOrEmpty(instrument.Sector))
+                    entity.Sector = instrument.Sector;
             }
 
             else
@@ -62,6 +65,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                         InstrumentId = x.InstrumentId,
                         Ticker = x.Ticker,
                         Name = x.Name,
+                        Sector = x.Sector,
                         Type = x.Type,
                         MaturityDate = x.MaturityDate,
                         CouponQuantityPerYear = x.CouponQuantityPerYear,
