@@ -13,7 +13,7 @@ public class GetCandlesHelper(
     private const int DelayInMilliseconds = 1000;
     
     public Task<List<Candle>> GetCandlesAsync(Guid instrumentId, DateOnly from, DateOnly to) =>
-        GetCandlesAsync(instrumentId, DateOnlyToTimestamp(from), DateOnlyToTimestamp(to));  
+        GetCandlesAsync(instrumentId, ConvertHelper.DateOnlyToTimestamp(from), ConvertHelper.DateOnlyToTimestamp(to));  
 
     private async Task<List<Candle>> GetCandlesAsync(
         Guid instrumentId, Timestamp from, Timestamp to)
@@ -34,12 +34,12 @@ public class GetCandlesHelper(
             .Select(x => 
                 new Candle
                 {
-                    Open = QuotationToDouble(x.Open),
-                    Close = QuotationToDouble(x.Close),
-                    Low = QuotationToDouble(x.Low),
-                    High = QuotationToDouble(x.High),
+                    Open = ConvertHelper.QuotationToDouble(x.Open),
+                    Close = ConvertHelper.QuotationToDouble(x.Close),
+                    Low = ConvertHelper.QuotationToDouble(x.Low),
+                    High = ConvertHelper.QuotationToDouble(x.High),
                     Volume = x.Volume,
-                    Date = TimestampToDateOnly(x.Time)
+                    Date = ConvertHelper.TimestampToDateOnly(x.Time)
                 })
             .ToList();
 
@@ -68,13 +68,4 @@ public class GetCandlesHelper(
             To = to,
             Interval = interval
         };
-
-    private static Timestamp DateOnlyToTimestamp(DateOnly dateOnly) =>
-        Timestamp.FromDateTime(dateOnly.ToDateTime(TimeOnly.MinValue).ToUniversalTime());
-
-    private static double QuotationToDouble(Quotation quotation) => 
-        quotation is null ? 0.0 : quotation.Units + quotation.Nano / 1_000_000_000.0;
-
-    private static DateOnly TimestampToDateOnly(Timestamp timestamp) => 
-        timestamp is null ? DateOnly.MinValue : DateOnly.FromDateTime(timestamp.ToDateTime());
 }

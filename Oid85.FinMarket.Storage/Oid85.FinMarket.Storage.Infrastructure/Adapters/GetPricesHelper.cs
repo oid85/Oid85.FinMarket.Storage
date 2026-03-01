@@ -37,7 +37,7 @@ public class GetPricesHelper(
             return [];
                 
         var result = response.LastPrices
-            .Select(x => QuotationToDouble(x.Price))
+            .Select(x => ConvertHelper.QuotationToDouble(x.Price))
             .ToList();
 
         return result;      
@@ -65,7 +65,4 @@ public class GetPricesHelper(
 
         return request;
     }
-
-    private static double QuotationToDouble(Quotation quotation) =>
-        quotation is null ? 0.0 : quotation.Units + quotation.Nano / 1_000_000_000.0;
 }

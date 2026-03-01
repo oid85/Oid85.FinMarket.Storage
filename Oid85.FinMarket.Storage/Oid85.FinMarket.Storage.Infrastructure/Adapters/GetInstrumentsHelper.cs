@@ -1,5 +1,4 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using NLog;
+﻿using NLog;
 using Oid85.FinMarket.Storage.Common.KnownConstants;
 using Tinkoff.InvestApi;
 using Tinkoff.InvestApi.V1;
@@ -106,9 +105,9 @@ public class GetInstrumentsHelper(
                     InstrumentId = Guid.Parse(tinkoffInstrument.Uid),
                     Ticker = tinkoffInstrument.Ticker,
                     Name = tinkoffInstrument.Name,
-                    MaturityDate = TimestampToDateOnly(tinkoffInstrument.MaturityDate),
+                    MaturityDate = ConvertHelper.TimestampToDateOnly(tinkoffInstrument.MaturityDate),
                     CouponQuantityPerYear = tinkoffInstrument.CouponQuantityPerYear,
-                    Nkd = MoneyValueToDouble(tinkoffInstrument.AciValue),
+                    Nkd = ConvertHelper.MoneyValueToDouble(tinkoffInstrument.AciValue),
                     Sector = tinkoffInstrument.Sector,
                     Type = KnownInstrumentTypes.Bond
                 };
@@ -159,16 +158,5 @@ public class GetInstrumentsHelper(
             logger.Error(exception, "Ошибка получения данных");
             return [];
         }
-    }
-
-    private static DateOnly TimestampToDateOnly(Timestamp timestamp) =>
-        timestamp is null ? DateOnly.MinValue : DateOnly.FromDateTime(timestamp.ToDateTime());
-
-    private static double MoneyValueToDouble(MoneyValue moneyValue)
-    {
-        if (moneyValue is null)
-            return 0.0;
-
-        return moneyValue.Units + moneyValue.Nano / 1_000_000_000.0;
     }
 }

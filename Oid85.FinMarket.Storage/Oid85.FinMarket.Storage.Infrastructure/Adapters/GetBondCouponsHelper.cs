@@ -1,5 +1,4 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using NLog;
+﻿using NLog;
 using Oid85.FinMarket.Storage.Core.Models;
 using Tinkoff.InvestApi;
 using Tinkoff.InvestApi.V1;
@@ -39,8 +38,8 @@ public class GetBondCouponsHelper(
                             Ticker = instrument.Ticker,
                             CouponNumber = coupon.CouponNumber,
                             CouponPeriod = coupon.CouponPeriod,
-                            CouponDate = TimestampToDateOnly(coupon.CouponDate),
-                            PayOneBond = MoneyValueToDouble(coupon.PayOneBond)
+                            CouponDate = ConvertHelper.TimestampToDateOnly(coupon.CouponDate),
+                            PayOneBond = ConvertHelper.MoneyValueToDouble(coupon.PayOneBond)
                         };
 
                         bondCoupons.Add(bondCoupon);   
@@ -54,8 +53,8 @@ public class GetBondCouponsHelper(
         new()
         {
             InstrumentId = instrumentId.ToString(),
-            From = DateOnlyToTimestamp(DateTime.Today.AddYears(-1)),
-            To = DateOnlyToTimestamp(DateTime.Today.AddYears(1))
+            From = ConvertHelper.DateTimeToTimestamp(DateTime.Today.AddYears(-1)),
+            To = ConvertHelper.DateTimeToTimestamp(DateTime.Today.AddYears(1))
         };
     
     private async Task<GetBondCouponsResponse?> SendGetBondCouponsRequest(GetBondCouponsRequest request)
@@ -70,24 +69,5 @@ public class GetBondCouponsHelper(
             logger.Error(exception, "Ошибка получения данных. {request}", request);
             return null;
         }
-    }
-
-    private static Timestamp DateOnlyToTimestamp(DateTime dateTime) =>
-        Timestamp.FromDateTime(dateTime.ToUniversalTime());
-
-    private static DateOnly TimestampToDateOnly(Timestamp timestamp)
-    {
-        if (timestamp is null)
-            return DateOnly.MinValue;
-
-        return DateOnly.FromDateTime(timestamp.ToDateTime());
-    }
-
-    private static double MoneyValueToDouble(MoneyValue moneyValue)
-    {
-        if (moneyValue is null)
-            return 0.0;
-
-        return moneyValue.Units + moneyValue.Nano / 1_000_000_000.0;
     }
 }
