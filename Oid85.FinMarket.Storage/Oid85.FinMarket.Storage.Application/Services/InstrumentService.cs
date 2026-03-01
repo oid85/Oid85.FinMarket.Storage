@@ -1,6 +1,7 @@
 ﻿using Oid85.FinMarket.Storage.Application.Interfaces.Adapters;
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
 using Oid85.FinMarket.Storage.Application.Interfaces.Services;
+using Oid85.FinMarket.Storage.Common.KnownConstants;
 using Oid85.FinMarket.Storage.Core.Requests;
 using Oid85.FinMarket.Storage.Core.Responses;
 
@@ -59,7 +60,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
 
             for (var i = 0; i < prices.Count; i++)
             {
-                activeInstruments[i].LastPrice = prices[i];
+                activeInstruments[i].LastPrice = activeInstruments[i].Type == KnownInstrumentTypes.Bond ? prices[i] * 10.0 : prices[i];
                 await instrumentRepository.AddAsync(activeInstruments[i]);
             }
         }
