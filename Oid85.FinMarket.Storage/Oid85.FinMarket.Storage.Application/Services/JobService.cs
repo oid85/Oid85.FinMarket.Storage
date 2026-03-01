@@ -9,6 +9,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
         IBondCouponService bondCouponService) 
         : IJobService
     {
+        /// <inheritdoc />
         public Task LoadBondCouponsAsync() =>
             bondCouponService.LoadBondCouponsAsync();
 
