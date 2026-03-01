@@ -6,9 +6,13 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Adapters
     public class InvestApiClientAdapter(
         GetInstrumentsHelper getInstrumentsHelper,
         GetCandlesHelper getCandlesHelper,
-        GetBondCouponsHelper getBondCouponsHelper) 
+        GetBondCouponsHelper getBondCouponsHelper,
+        GetPricesHelper getPricesHelper) 
         : IInvestApiClientAdapter
     {
+        public Task<List<double>> GetLastPricesAsync(List<Guid> instrumentIds) =>
+            getPricesHelper.GetPricesAsync(instrumentIds);
+
         public Task<List<BondCoupon>> GetBondCouponsAsync(List<Instrument> instruments) =>
             getBondCouponsHelper.GetBondCouponsAsync(instruments);
 

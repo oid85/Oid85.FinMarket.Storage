@@ -31,10 +31,12 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     Type = x.Type,
                     MaturityDate = x.MaturityDate,
                     CouponQuantityPerYear = x.CouponQuantityPerYear,
-                    Nkd = x.Nkd
+                    Nkd = x.Nkd,
+                    LastPrice = x.LastPrice
                 })
                 .ToList()
             };
+
             return response;
         }
 
@@ -44,7 +46,22 @@ namespace Oid85.FinMarket.Storage.Application.Services
             var instruments = await investApiClientAdapter.GetInstrumentsAsync();
 
             foreach (var instrument in instruments)
-                await instrumentRepository.AddAsync(instrument);      
+                await instrumentRepository.AddAsync(instrument);
+
+            await LoadLastPricesAsync();
+        }
+
+        private async Task LoadLastPricesAsync()
+        {
+            var activeInstruments = (await instrumentRepository.GetActiveInstrumentsAsync()) ?? [];
+            var instrumentIds = activeInstruments.Select(x => x.InstrumentId).ToList();
+            var prices = await investApiClientAdapter.GetLastPricesAsync(instrumentIds);
+
+            for (var i = 0; i < prices.Count; i++)
+            {
+                activeInstruments[i].LastPrice = prices[i];
+                await instrumentRepository.AddAsync(activeInstruments[i]);
+            }
         }
     }
 }

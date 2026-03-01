@@ -41,5 +41,10 @@
         /// НКД
         /// </summary>
         public double? Nkd { get; set; } = null;
+
+        /// <summary>
+        /// Цена
+        /// </summary>
+        public double? LastPrice { get; set; } = null;
     }
 }

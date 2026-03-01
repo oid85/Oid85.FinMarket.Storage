@@ -53,5 +53,10 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Entities
         /// НКД
         /// </summary>
         public double? Nkd { get; set; }
+
+        /// <summary>
+        /// Цена
+        /// </summary>
+        public double? LastPrice { get; set; }
     }
 }
