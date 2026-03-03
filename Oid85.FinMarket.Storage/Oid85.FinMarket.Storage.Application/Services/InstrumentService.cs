@@ -2,6 +2,7 @@
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
 using Oid85.FinMarket.Storage.Application.Interfaces.Services;
 using Oid85.FinMarket.Storage.Common.KnownConstants;
+using Oid85.FinMarket.Storage.Core.Models;
 using Oid85.FinMarket.Storage.Core.Requests;
 using Oid85.FinMarket.Storage.Core.Responses;
 
@@ -49,19 +50,18 @@ namespace Oid85.FinMarket.Storage.Application.Services
             foreach (var instrument in instruments)
                 await instrumentRepository.AddAsync(instrument);
 
-            await LoadLastPricesAsync();
+            await LoadLastPricesAsync(instruments);
         }
 
-        private async Task LoadLastPricesAsync()
+        private async Task LoadLastPricesAsync(List<Instrument> instruments)
         {
-            var activeInstruments = (await instrumentRepository.GetActiveInstrumentsAsync()) ?? [];
-            var instrumentIds = activeInstruments.Select(x => x.InstrumentId).ToList();
+            var instrumentIds = instruments.Select(x => x.InstrumentId).ToList();
             var prices = await investApiClientAdapter.GetLastPricesAsync(instrumentIds);
 
             for (var i = 0; i < prices.Count; i++)
             {
-                activeInstruments[i].LastPrice = activeInstruments[i].Type == KnownInstrumentTypes.Bond ? prices[i] * 10.0 : prices[i];
-                await instrumentRepository.AddAsync(activeInstruments[i]);
+                instruments[i].LastPrice = instruments[i].Type == KnownInstrumentTypes.Bond ? prices[i] * 10.0 : prices[i];
+                await instrumentRepository.AddAsync(instruments[i]);
             }
         }
     }
