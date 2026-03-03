@@ -27,6 +27,8 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
 
                 if (!string.IsNullOrEmpty(instrument.Sector))
                     entity.Sector = instrument.Sector;
+                else
+                    entity.Sector = "-";
             }
 
             else
@@ -37,11 +39,12 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                     InstrumentId = instrument.InstrumentId,
                     Ticker = instrument.Ticker,
                     Name = instrument.Name,
+                    Sector = instrument.Sector,
                     MaturityDate = instrument.MaturityDate,
                     CouponQuantityPerYear = instrument.CouponQuantityPerYear,
                     Nkd = instrument.Nkd,
                     LastPrice = instrument.LastPrice,
-                    Type = instrument.Type
+                    Type = instrument.Type                   
                 };
 
                 await context.AddAsync(entity);
