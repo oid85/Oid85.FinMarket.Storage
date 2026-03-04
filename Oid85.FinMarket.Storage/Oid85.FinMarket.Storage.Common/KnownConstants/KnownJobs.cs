@@ -4,5 +4,5 @@ public static class KnownJobs
 {
     public const string LoadInstruments = "LoadInstruments";
     public const string LoadCandles = "LoadCandles"; 
-    public const string BondCoupons = "BondCoupons";
+    public const string LoadBondCoupons = "LoadBondCoupons";
 }
