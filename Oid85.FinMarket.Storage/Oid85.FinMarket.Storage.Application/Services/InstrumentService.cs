@@ -34,7 +34,9 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     MaturityDate = x.MaturityDate,
                     CouponQuantityPerYear = x.CouponQuantityPerYear,
                     Nkd = x.Nkd,
-                    LastPrice = x.LastPrice
+                    Nominal = x.Nominal,
+                    LastPrice = x.LastPrice,
+                    Currency = x.Currency
                 })
                 .ToList()
             };

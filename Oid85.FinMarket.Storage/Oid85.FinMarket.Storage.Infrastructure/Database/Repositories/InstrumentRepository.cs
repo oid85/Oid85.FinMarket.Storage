@@ -25,6 +25,12 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                 if (instrument.LastPrice is not null)
                     entity.LastPrice = instrument.LastPrice;
 
+                if (instrument.Nominal is not null)
+                    entity.Nominal = instrument.Nominal;
+
+                if (instrument.Nominal is not null)
+                    entity.Currency = instrument.Currency;
+
                 if (!string.IsNullOrEmpty(instrument.Sector))
                     entity.Sector = instrument.Sector;
                 else
@@ -44,6 +50,8 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                     CouponQuantityPerYear = instrument.CouponQuantityPerYear,
                     Nkd = instrument.Nkd,
                     LastPrice = instrument.LastPrice,
+                    Nominal = instrument.Nominal,
+                    Currency = instrument.Currency,
                     Type = instrument.Type                   
                 };
 
@@ -78,6 +86,8 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                         CouponQuantityPerYear = x.CouponQuantityPerYear,
                         Nkd = x.Nkd,
                         LastPrice = x.LastPrice,
+                        Nominal = x.Nominal,
+                        Currency = x.Currency,
                         IsActive = x.IsActive
                     })
                 .ToList();

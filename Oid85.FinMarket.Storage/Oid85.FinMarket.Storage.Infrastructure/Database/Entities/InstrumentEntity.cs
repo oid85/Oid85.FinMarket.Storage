@@ -58,5 +58,15 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Entities
         /// Цена
         /// </summary>
         public double? LastPrice { get; set; }
+
+        /// <summary>
+        /// Номинал
+        /// </summary>
+        public double? Nominal { get; set; }
+
+        /// <summary>
+        /// Валюта
+        /// </summary>
+        public string? Currency { get; set; }
     }
 }
