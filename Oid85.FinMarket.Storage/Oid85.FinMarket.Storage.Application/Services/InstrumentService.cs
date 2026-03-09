@@ -21,7 +21,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                 .Where(x => 
                     x.Type == KnownInstrumentTypes.Share ||
                     x.Type == KnownInstrumentTypes.Index ||
-                    (x.Type == KnownInstrumentTypes.Share && x.MaturityDate >= DateOnly.FromDateTime(DateTime.Today)))
+                    (x.Type == KnownInstrumentTypes.Bond && x.MaturityDate >= DateOnly.FromDateTime(DateTime.Today)))
                 .ToList();
 
             if (instruments is null)
