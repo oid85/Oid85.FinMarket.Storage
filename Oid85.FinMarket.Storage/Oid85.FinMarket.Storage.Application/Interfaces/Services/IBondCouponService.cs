@@ -17,5 +17,10 @@ namespace Oid85.FinMarket.Storage.Application.Interfaces.Services
         /// Загрузить купоны
         /// </summary>
         Task LoadBondCouponsAsync();
+
+        /// <summary>
+        /// Загрузить купоны
+        /// </summary>
+        Task LoadBondCouponsAsync(string ticker);
     }
 }

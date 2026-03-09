@@ -14,6 +14,10 @@ namespace Oid85.FinMarket.Storage.Application.Services
             bondCouponService.LoadBondCouponsAsync();
 
         /// <inheritdoc />
+        public Task LoadBondCouponsAsync(string ticker) =>
+            bondCouponService.LoadBondCouponsAsync(ticker);
+
+        /// <inheritdoc />
         public Task LoadCandlesAsync() => 
             candleService.LoadCandlesAsync();
 

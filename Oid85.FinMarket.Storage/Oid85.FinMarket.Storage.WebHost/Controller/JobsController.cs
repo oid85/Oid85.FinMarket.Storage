@@ -42,4 +42,14 @@ public class JobsController(
         await jobService.LoadBondCouponsAsync();
         return Ok();
     }
+
+    /// <summary>
+    /// Загрузить купоны
+    /// </summary>
+    [HttpPost("load-bond-coupons/{ticker}")]
+    public async Task<IActionResult> LoadBondCouponsAsync(string ticker)
+    {
+        await jobService.LoadBondCouponsAsync(ticker);
+        return Ok();
+    }
 }

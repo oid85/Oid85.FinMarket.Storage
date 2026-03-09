@@ -11,6 +11,11 @@
         Task LoadBondCouponsAsync();
 
         /// <summary>
+        /// Загрузить купоны
+        /// </summary>
+        Task LoadBondCouponsAsync(string ticker);
+
+        /// <summary>
         /// Загрузить свечи
         /// </summary>
         Task LoadCandlesAsync();

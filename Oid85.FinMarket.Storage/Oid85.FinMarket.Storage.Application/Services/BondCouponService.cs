@@ -41,7 +41,27 @@ namespace Oid85.FinMarket.Storage.Application.Services
         /// <inheritdoc />
         public async Task LoadBondCouponsAsync()
         {
-            var instruments = (await instrumentRepository.GetActiveInstrumentsAsync())?.Where(x => x.Type == KnownInstrumentTypes.Bond).ToList();
+            var instruments = (await instrumentRepository.GetActiveInstrumentsAsync())?
+                .Where(x => x.Type == KnownInstrumentTypes.Bond)
+                .Where(x => x.MaturityDate >= DateOnly.FromDateTime(DateTime.Today))
+                .ToList();
+
+            if (instruments is null)
+                return;
+
+            var bondCoupons = await investApiClientAdapter.GetBondCouponsAsync(instruments);
+
+            await bondCouponRepository.AddAsync(bondCoupons);
+        }
+
+        /// <inheritdoc />
+        public async Task LoadBondCouponsAsync(string ticker)
+        {
+            var instruments = (await instrumentRepository.GetActiveInstrumentsAsync())?
+                .Where(x => x.Type == KnownInstrumentTypes.Bond)
+                .Where(x => x.MaturityDate >= DateOnly.FromDateTime(DateTime.Today))
+                .Where(x => x.Ticker == ticker)
+                .ToList();
 
             if (instruments is null)
                 return;
