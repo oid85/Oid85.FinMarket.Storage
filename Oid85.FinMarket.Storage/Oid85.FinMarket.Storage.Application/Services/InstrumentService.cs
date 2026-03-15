@@ -59,6 +59,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                 await instrumentRepository.AddAsync(instrument);
 
             await LoadLastPricesAsync(instruments);
+            await instrumentRepository.DeleteOldBondsAsync();
         }
 
         private async Task LoadLastPricesAsync(List<Instrument> instruments)

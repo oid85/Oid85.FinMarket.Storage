@@ -11,11 +11,15 @@ namespace Oid85.FinMarket.Storage.Application.Interfaces.Repositories
         /// Добавление инструмента
         /// </summary>
         Task<Guid?> AddAsync(Instrument instrument);
+        
+        /// <summary>
+        /// Удалить облигации с истекшим сроком погашения
+        /// </summary>
+        Task DeleteOldBondsAsync();
 
         /// <summary>
         /// Получить активные инструменты
         /// </summary>
-        /// <returns></returns>
         Task<List<Instrument>?> GetActiveInstrumentsAsync();
     }
 }

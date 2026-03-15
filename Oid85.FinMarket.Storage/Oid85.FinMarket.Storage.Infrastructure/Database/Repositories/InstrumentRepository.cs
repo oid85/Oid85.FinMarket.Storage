@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
+using Oid85.FinMarket.Storage.Common.KnownConstants;
 using Oid85.FinMarket.Storage.Core.Models;
 using Oid85.FinMarket.Storage.Infrastructure.Database.Entities;
 
@@ -61,6 +62,20 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
             await context.SaveChangesAsync();
 
             return entity.Id;
+        }
+
+        /// <inheritdoc/>
+        public async Task DeleteOldBondsAsync()
+        {
+            await using var context = await contextFactory.CreateDbContextAsync();
+
+            await context.InstrumentEntities
+                .Where(x => x.Type == KnownInstrumentTypes.Bond)
+                .Where(x => x.MaturityDate != null)
+                .Where(x => x.MaturityDate < DateOnly.FromDateTime(DateTime.Today))
+                .ExecuteDeleteAsync();
+
+            await context.SaveChangesAsync();
         }
 
         public async Task<List<Instrument>?> GetActiveInstrumentsAsync()
