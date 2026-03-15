@@ -68,7 +68,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
 
             for (var i = 0; i < prices.Count; i++)
             {
-                instruments[i].LastPrice = instruments[i].Type == KnownInstrumentTypes.Bond ? prices[i] * 10.0 : prices[i];
+                instruments[i].LastPrice = instruments[i].Type == KnownInstrumentTypes.Bond ? instruments[i].Nominal * prices[i] / 100.0 : prices[i];
                 await instrumentRepository.AddAsync(instruments[i]);
             }
         }
