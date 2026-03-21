@@ -51,5 +51,33 @@ namespace Oid85.FinMarket.Storage.Application.Services
 
             return response;
         }
+
+        /// <inheritdoc/>
+        public async Task DividendImportAsync()
+        {
+            string separator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+
+            string path = @"c:\Users\79131\Downloads\dividends.txt";
+            var lines = await File.ReadAllLinesAsync(path);
+
+            string ticker = lines[0].Trim();
+
+            for (int i = 1; i < lines.Length; i++)
+            {
+                var parts = lines[i].Split('\t');
+
+                var value = Convert.ToDouble(parts[1].Trim().Replace(",", separator).Replace(".", separator));
+
+                var fundamentalParameter = new FundamentalParameter
+                {
+                    Ticker = ticker,
+                    Type = "Dividend",
+                    Period = parts[0].Trim(),
+                    Value = value
+                };
+
+                await fundamentalParameterRepository.CreateOrUpdateFundamentalParameterAsync(fundamentalParameter);
+            }
+        }
     }
 }

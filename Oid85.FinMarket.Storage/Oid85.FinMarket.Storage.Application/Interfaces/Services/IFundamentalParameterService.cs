@@ -11,11 +11,16 @@ namespace Oid85.FinMarket.Storage.Application.Interfaces.Services
         /// <summary>
         /// Создание/изменение фундаментального параметра
         /// </summary>
-        Task<CreateOrUpdateFundamentalParameterResponse> CreateOrUpdateFundamentalParameterAsync(CreateOrUpdateFundamentalParameterRequest request);
+        Task<CreateOrUpdateFundamentalParameterResponse> CreateOrUpdateFundamentalParameterAsync(CreateOrUpdateFundamentalParameterRequest request);        
 
         /// <summary>
         /// Получить список фундаментальных параметров
         /// </summary>
         Task<GetFundamentalParameterListResponse> GetFundamentalParameterListAsync(GetFundamentalParameterListRequest request);
+
+        /// <summary>
+        /// Импорта дивидендов из файла
+        /// </summary>
+        Task DividendImportAsync();
     }
 }

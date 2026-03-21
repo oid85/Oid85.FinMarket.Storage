@@ -41,4 +41,14 @@ public class FundamentalParameterController(
         GetResponseAsync(
             () => fundamentalParameterService.CreateOrUpdateFundamentalParameterAsync(request),
             result => new BaseResponse<CreateOrUpdateFundamentalParameterResponse> { Result = result });
+
+    /// <summary>
+    /// Импорт дивидендов
+    /// </summary>
+    [HttpPost("dividend-import")]
+    public async Task<IActionResult> DividendImportAsync()
+    {
+        await fundamentalParameterService.DividendImportAsync();
+        return Ok();
+    }
 }
