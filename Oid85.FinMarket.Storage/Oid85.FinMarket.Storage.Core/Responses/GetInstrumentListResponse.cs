@@ -18,11 +18,6 @@
         public string Name { get; set; }
 
         /// <summary>
-        /// Сектор
-        /// </summary>
-        public string Sector { get; set; }
-
-        /// <summary>
         /// Тип
         /// </summary>
         public string Type { get; set; }

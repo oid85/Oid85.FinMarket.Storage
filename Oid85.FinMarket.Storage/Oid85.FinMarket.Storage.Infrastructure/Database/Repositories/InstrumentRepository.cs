@@ -31,11 +31,6 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
 
                 if (instrument.Nominal is not null)
                     entity.Currency = instrument.Currency;
-
-                if (!string.IsNullOrEmpty(instrument.Sector))
-                    entity.Sector = instrument.Sector;
-                else
-                    entity.Sector = "-";
             }
 
             else
@@ -46,7 +41,6 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                     InstrumentId = instrument.InstrumentId,
                     Ticker = instrument.Ticker,
                     Name = instrument.Name,
-                    Sector = instrument.Sector,
                     MaturityDate = instrument.MaturityDate,
                     CouponQuantityPerYear = instrument.CouponQuantityPerYear,
                     Nkd = instrument.Nkd,
@@ -95,7 +89,6 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                         InstrumentId = x.InstrumentId,
                         Ticker = x.Ticker,
                         Name = x.Name,
-                        Sector = x.Sector,
                         Type = x.Type,
                         MaturityDate = x.MaturityDate,
                         CouponQuantityPerYear = x.CouponQuantityPerYear,
