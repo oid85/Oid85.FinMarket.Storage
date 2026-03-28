@@ -6,7 +6,9 @@ namespace Oid85.FinMarket.Storage.Application.Services
     public class JobService(
         IInstrumentService instrumentService,
         ICandleService candleService,
-        IBondCouponService bondCouponService) 
+        IBondCouponService bondCouponService,
+        IDividendService dividendService,
+        IForecastService forecastService) 
         : IJobService
     {
         /// <inheritdoc />
@@ -20,6 +22,14 @@ namespace Oid85.FinMarket.Storage.Application.Services
         /// <inheritdoc />
         public Task LoadCandlesAsync() => 
             candleService.LoadCandlesAsync();
+
+        /// <inheritdoc />
+        public Task LoadDividendsAsync() =>
+            dividendService.LoadDividendsAsync();
+
+        /// <inheritdoc />
+        public Task LoadForecastConsensusesAsync() =>
+            forecastService.LoadForecastConsensusesAsync();
 
         /// <inheritdoc />
         public Task LoadInstrumentsAsync() => 

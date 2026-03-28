@@ -35,6 +35,8 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IConsumerPriceIndexChangeRepository, ConsumerPriceIndexChangeRepository>();
         services.AddTransient<IMonetaryAggregateRepository, MonetaryAggregateRepository>();
         services.AddTransient<IKeyRateRepository, KeyRateRepository>();
+        services.AddTransient<IDividendRepository, DividendRepository>();
+        services.AddTransient<IForecastRepository, ForecastRepository>();
     }
 
     public static void ConfigureInvestApiClient(
@@ -51,6 +53,8 @@ public static class ServiceCollectionExtensions
         services.AddTransient<GetCandlesHelper>();
         services.AddTransient<GetBondCouponsHelper>();
         services.AddTransient<GetPricesHelper>();
+        services.AddTransient<GetForecastHelper>();
+        services.AddTransient<GetDividendInfoHelper>();
 
         services.AddTransient<IInvestApiClientAdapter, InvestApiClientAdapter>();
     }

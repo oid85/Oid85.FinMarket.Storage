@@ -7,7 +7,9 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Adapters
         GetInstrumentsHelper getInstrumentsHelper,
         GetCandlesHelper getCandlesHelper,
         GetBondCouponsHelper getBondCouponsHelper,
-        GetPricesHelper getPricesHelper) 
+        GetPricesHelper getPricesHelper,
+        GetDividendInfoHelper getDividendInfoHelper,
+        GetForecastHelper getForecastHelper) 
         : IInvestApiClientAdapter
     {
         public Task<List<double>> GetLastPricesAsync(List<Guid> instrumentIds) =>
@@ -18,6 +20,12 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Adapters
 
         public Task<List<Candle>> GetCandlesAsync(Guid instrumentId, DateOnly from, DateOnly to) =>
             getCandlesHelper.GetCandlesAsync(instrumentId, from, to);
+
+        public Task<List<DividendInfo>> GetDividendInfosAsync(List<Instrument> instruments) =>
+            getDividendInfoHelper.GetDividendInfoAsync(instruments);
+
+        public Task<List<ForecastConsensus>> GetForecastConsensusesAsync(List<Instrument> instruments) =>
+            getForecastHelper.GetForecastConsensusesAsync(instruments);
 
         public async Task<List<Instrument>> GetInstrumentsAsync() => 
             [

@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Oid85.FinMarket.Storage.Core.Responses
+{
+    public class GetForecastListResponse
+    {
+        public List<GetForecastListItemResponse> Forecasts { get; set; } = [];
+    }
+
+    public class GetForecastListItemResponse
+    {
+        public string Ticker { get; set; }
+        public double CurrentPrice { get; set; }
+        public double ConsensusPrice { get; set; }
+        public double MinTarget { get; set; }
+        public double MaxTarget { get; set; }
+        public double PriceChange { get; set; }
+        public double PriceChangeRel { get; set; }
+        public string RecommendationString { get; set; }        
+    }
+}

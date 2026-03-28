@@ -21,6 +21,16 @@
         Task LoadCandlesAsync();
 
         /// <summary>
+        /// Загрузить дивиденеды
+        /// </summary>
+        Task LoadDividendsAsync();
+
+        /// <summary>
+        /// Загрузить прогнозы
+        /// </summary>
+        Task LoadForecastConsensusesAsync();
+
+        /// <summary>
         /// Загрузить инструменты
         /// </summary>
         Task LoadInstrumentsAsync();

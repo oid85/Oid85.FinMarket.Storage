@@ -52,4 +52,24 @@ public class JobsController(
         await jobService.LoadBondCouponsAsync(ticker);
         return Ok();
     }
+
+    /// <summary>
+    /// Загрузить дивиденды
+    /// </summary>
+    [HttpPost("load-dividends")]
+    public async Task<IActionResult> LoadDividendsAsync()
+    {
+        await jobService.LoadDividendsAsync();
+        return Ok();
+    }
+
+    /// <summary>
+    /// Загрузить прогнозы
+    /// </summary>
+    [HttpPost("load-forecasts")]
+    public async Task<IActionResult> LoadForecastConsensusesAsync()
+    {
+        await jobService.LoadForecastConsensusesAsync();
+        return Ok();
+    }
 }

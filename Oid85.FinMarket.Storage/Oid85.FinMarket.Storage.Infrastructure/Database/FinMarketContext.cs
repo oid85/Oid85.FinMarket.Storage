@@ -14,6 +14,8 @@ public class FinMarketContext(DbContextOptions<FinMarketContext> options) : DbCo
     public DbSet<ConsumerPriceIndexChangeEntity> ConsumerPriceIndexChangeEntities { get; set; }
     public DbSet<MonetaryAggregateEntity> MonetaryAggregateEntities { get; set; }
     public DbSet<KeyRateEntity> KeyRateEntities { get; set; }
+    public DbSet<ForecastConsensusEntity> ForecastConsensusEntities { get; set; }
+    public DbSet<DividendInfoEntity> DividendInfoEntities { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

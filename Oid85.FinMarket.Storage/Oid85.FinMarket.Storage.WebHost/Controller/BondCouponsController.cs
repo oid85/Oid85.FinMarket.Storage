@@ -23,7 +23,7 @@ public class BondCouponsController(
     [ProducesResponseType(typeof(BaseResponse<GetBondCouponListResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BaseResponse<GetBondCouponListResponse>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(BaseResponse<GetBondCouponListResponse>), StatusCodes.Status500InternalServerError)]
-    public Task<IActionResult> GetCandleListAsync(
+    public Task<IActionResult> GetBondCouponListAsync(
         [FromBody] GetBondCouponListRequest request) =>
         GetResponseAsync(
             () => bondCouponService.GetBondCouponListAsync(request),
