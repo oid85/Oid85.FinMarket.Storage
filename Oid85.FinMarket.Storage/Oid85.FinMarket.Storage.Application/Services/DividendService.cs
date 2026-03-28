@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Oid85.FinMarket.Storage.Application.Interfaces.Adapters;
+﻿using Oid85.FinMarket.Storage.Application.Interfaces.Adapters;
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
 using Oid85.FinMarket.Storage.Application.Interfaces.Services;
 using Oid85.FinMarket.Storage.Common.KnownConstants;

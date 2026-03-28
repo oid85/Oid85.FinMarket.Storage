@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using NLog.Targets;
+﻿using Microsoft.EntityFrameworkCore;
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
 using Oid85.FinMarket.Storage.Core.Models;
 using Oid85.FinMarket.Storage.Infrastructure.Database.Entities;
-using Tinkoff.InvestApi.V1;
 
 namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
 {

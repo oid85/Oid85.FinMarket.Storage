@@ -2,7 +2,6 @@
 using Oid85.FinMarket.Storage.Core.Models;
 using Tinkoff.InvestApi;
 using Tinkoff.InvestApi.V1;
-using static Tinkoff.InvestApi.V1.GetForecastResponse.Types;
 
 namespace Oid85.FinMarket.Storage.Infrastructure.Adapters;
 
