@@ -34,6 +34,7 @@ public class GetInstrumentsHelper(
                     Ticker = tinkoffInstrument.Ticker,                    
                     Name = tinkoffInstrument.Name,
                     Currency = tinkoffInstrument.Currency,
+                    Lot = tinkoffInstrument.Lot,
                     Type = KnownInstrumentTypes.Share
                 };
 
@@ -69,6 +70,7 @@ public class GetInstrumentsHelper(
                     Ticker = tinkoffInstrument.Ticker,
                     Name = tinkoffInstrument.Name,
                     Currency = tinkoffInstrument.Currency,
+                    Lot = tinkoffInstrument.Lot,
                     Type = KnownInstrumentTypes.Future
                 };
 
@@ -110,6 +112,7 @@ public class GetInstrumentsHelper(
                     Nkd = ConvertHelper.MoneyValueToDouble(tinkoffInstrument.AciValue),
                     Nominal = ConvertHelper.MoneyValueToDouble(tinkoffInstrument.Nominal),
                     Currency = tinkoffInstrument.Currency,
+                    Lot = tinkoffInstrument.Lot,
                     Type = KnownInstrumentTypes.Bond
                 };
 

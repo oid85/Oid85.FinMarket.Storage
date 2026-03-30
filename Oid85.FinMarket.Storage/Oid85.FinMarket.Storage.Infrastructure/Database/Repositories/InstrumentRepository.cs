@@ -29,8 +29,11 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                 if (instrument.Nominal is not null)
                     entity.Nominal = instrument.Nominal;
 
-                if (instrument.Nominal is not null)
+                if (instrument.Currency is not null)
                     entity.Currency = instrument.Currency;
+
+                if (instrument.Lot is not null)
+                    entity.Lot = instrument.Lot;
             }
 
             else
@@ -47,6 +50,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                     LastPrice = instrument.LastPrice,
                     Nominal = instrument.Nominal,
                     Currency = instrument.Currency,
+                    Lot = instrument.Lot,
                     Type = instrument.Type                   
                 };
 
@@ -96,6 +100,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                         LastPrice = x.LastPrice,
                         Nominal = x.Nominal,
                         Currency = x.Currency,
+                        Lot = x.Lot,
                         IsActive = x.IsActive
                     })
                 .ToList();

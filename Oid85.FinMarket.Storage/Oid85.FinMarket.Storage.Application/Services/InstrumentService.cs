@@ -41,7 +41,8 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     Nkd = x.Nkd,
                     Nominal = x.Nominal,
                     LastPrice = x.LastPrice,
-                    Currency = x.Currency
+                    Currency = x.Currency,
+                    Lot = x.Lot
                 })
                 .ToList()
             };

@@ -61,5 +61,10 @@ namespace Oid85.FinMarket.Storage.Core.Models
         /// Валюта
         /// </summary>
         public string? Currency { get; set; }
+
+        /// <summary>
+        /// Лот
+        /// </summary>
+        public int? Lot { get; set; }
     }
 }

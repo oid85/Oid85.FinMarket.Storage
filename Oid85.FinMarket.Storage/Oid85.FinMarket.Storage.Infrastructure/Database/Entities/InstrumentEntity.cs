@@ -63,5 +63,10 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Entities
         /// Валюта
         /// </summary>
         public string? Currency { get; set; }
+
+        /// <summary>
+        /// Лот
+        /// </summary>
+        public int? Lot { get; set; }
     }
 }
