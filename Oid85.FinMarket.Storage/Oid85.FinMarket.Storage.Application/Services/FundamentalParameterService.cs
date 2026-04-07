@@ -30,7 +30,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
         /// <inheritdoc/>
         public async Task<GetFundamentalParameterListResponse> GetFundamentalParameterListAsync(GetFundamentalParameterListRequest request)
         {
-            var models = await fundamentalParameterRepository.GetFundamentalParametersAsync();
+            var models = await fundamentalParameterRepository.GetFundamentalParametersAsync(request.Ticker, request.Periods);
 
             if (models is null)
                 return new GetFundamentalParameterListResponse { FundamentalParameters = [] };

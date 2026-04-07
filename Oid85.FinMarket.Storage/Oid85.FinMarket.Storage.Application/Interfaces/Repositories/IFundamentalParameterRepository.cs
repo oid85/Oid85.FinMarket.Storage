@@ -16,6 +16,6 @@ namespace Oid85.FinMarket.Storage.Application.Interfaces.Repositories
         /// Получить список фундаментальных параметров
         /// </summary>
         /// <returns></returns>
-        Task<List<FundamentalParameter>?> GetFundamentalParametersAsync();
+        Task<List<FundamentalParameter>?> GetFundamentalParametersAsync(string? ticker, List<string>? periods);
     }
 }

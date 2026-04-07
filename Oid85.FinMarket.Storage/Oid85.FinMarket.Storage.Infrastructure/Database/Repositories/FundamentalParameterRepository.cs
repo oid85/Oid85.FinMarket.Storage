@@ -47,16 +47,24 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<List<FundamentalParameter>?> GetFundamentalParametersAsync()
+        public async Task<List<FundamentalParameter>?> GetFundamentalParametersAsync(string? ticker, List<string>? periods)
         {
             await using var context = await contextFactory.CreateDbContextAsync();
 
-            var entities = await context.FundamentalParameterEntities.ToListAsync();
+            var entities = context.FundamentalParameterEntities.AsQueryable();
 
-            if (entities is null)
+            if (ticker is not null)
+                entities = entities.Where(x => x.Ticker == ticker);
+
+            if (periods is not null)
+                entities = entities.Where(x => periods.Contains(x.Period));
+
+            var filteredEntities = await entities.ToListAsync();
+
+            if (filteredEntities is null)
                 return null;
 
-            var models = entities
+            var models = filteredEntities
                 .Select(x =>
                     new FundamentalParameter
                     {

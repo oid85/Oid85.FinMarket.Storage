@@ -2,6 +2,7 @@
 {
     public class GetFundamentalParameterListRequest
     {
-
+        public string? Ticker { get; set; }
+        public List<string>? Periods { get; set; }
     }
 }
