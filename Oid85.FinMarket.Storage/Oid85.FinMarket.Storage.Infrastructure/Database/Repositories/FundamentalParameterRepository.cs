@@ -30,7 +30,8 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                     Ticker = fundamentalParameter.Ticker,
                     Type = fundamentalParameter.Type,
                     Period = fundamentalParameter.Period,
-                    Value = fundamentalParameter.Value
+                    Value = fundamentalParameter.Value,
+                    ExtData = fundamentalParameter.ExtData
                 };
 
                 await context.AddAsync(entity);
@@ -38,7 +39,8 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
 
             else
             {
-                entity.Value = fundamentalParameter.Value;               
+                entity.Value = fundamentalParameter.Value;
+                entity.ExtData = fundamentalParameter.ExtData;
             }
 
             await context.SaveChangesAsync();
@@ -72,7 +74,8 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                         Ticker = x.Ticker,
                         Type = x.Type,
                         Period = x.Period,
-                        Value = x.Value
+                        Value = x.Value,
+                        ExtData = x.ExtData
                     })
                 .ToList();
 

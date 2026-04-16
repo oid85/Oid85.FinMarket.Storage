@@ -21,7 +21,8 @@ namespace Oid85.FinMarket.Storage.Application.Services
                         Ticker = item.Ticker,
                         Type = item.Type,
                         Period = item.Period,
-                        Value = item.Value
+                        Value = item.Value,
+                        ExtData = item.ExtData
                     });
 
             return new();
@@ -44,7 +45,8 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     Ticker = x.Ticker,
                     Type = x.Type,
                     Period = x.Period,
-                    Value = x.Value
+                    Value = x.Value,
+                    ExtData = x.ExtData
                 })
                 .ToList()
             };
@@ -73,7 +75,8 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     Ticker = ticker,
                     Type = "Dividend",
                     Period = parts[0].Trim(),
-                    Value = value
+                    Value = value,
+                    ExtData = string.Empty
                 };
 
                 await fundamentalParameterRepository.CreateOrUpdateFundamentalParameterAsync(fundamentalParameter);

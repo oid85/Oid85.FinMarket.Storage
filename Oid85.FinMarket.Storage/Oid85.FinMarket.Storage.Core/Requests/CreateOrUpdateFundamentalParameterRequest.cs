@@ -26,5 +26,10 @@
         /// Значение
         /// </summary>
         public double Value { get; set; }
+
+        /// <summary>
+        /// Доп. данные
+        /// </summary>
+        public string ExtData { get; set; }
     }
 }

@@ -26,5 +26,10 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Entities
         /// Значение
         /// </summary>
         public double Value { get; set; }
+
+        /// <summary>
+        /// Доп. данные
+        /// </summary>
+        public string ExtData { get; set; }
     }
 }
