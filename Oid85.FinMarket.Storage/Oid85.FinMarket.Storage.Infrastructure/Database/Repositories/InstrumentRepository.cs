@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore;
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
 using Oid85.FinMarket.Storage.Common.KnownConstants;
 using Oid85.FinMarket.Storage.Core.Models;
@@ -76,6 +77,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
             await context.SaveChangesAsync();
         }
 
+        /// <inheritdoc/>
         public async Task<List<Instrument>?> GetActiveInstrumentsAsync()
         {
             await using var context = await contextFactory.CreateDbContextAsync();
@@ -106,6 +108,54 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                 .ToList();
 
             return models;
+        }
+
+        /// <inheritdoc/>
+        public async Task<List<Instrument>?> GetInstrumentsAsync()
+        {
+            await using var context = await contextFactory.CreateDbContextAsync();
+
+            var entities = await context.InstrumentEntities.ToListAsync();
+
+            if (entities is null)
+                return null;
+
+            var models = entities
+                .Select(x =>
+                    new Instrument
+                    {
+                        Id = x.Id,
+                        InstrumentId = x.InstrumentId,
+                        Ticker = x.Ticker,
+                        Name = x.Name,
+                        Type = x.Type,
+                        MaturityDate = x.MaturityDate,
+                        CouponQuantityPerYear = x.CouponQuantityPerYear,
+                        Nkd = x.Nkd,
+                        LastPrice = x.LastPrice,
+                        Nominal = x.Nominal,
+                        Currency = x.Currency,
+                        Lot = x.Lot,
+                        IsActive = x.IsActive
+                    })
+                .ToList();
+
+            return models;
+        }
+
+        /// <inheritdoc/>
+        public async Task SetActiveFlagAsync(Guid instrumentId, bool value)
+        {
+            await using var context = await contextFactory.CreateDbContextAsync();
+
+            var entity = await context.InstrumentEntities.FirstOrDefaultAsync(x => x.Id == instrumentId);
+
+            if (entity is null) 
+                return;
+
+            entity.IsActive = value;
+
+            await context.SaveChangesAsync();
         }
     }
 }

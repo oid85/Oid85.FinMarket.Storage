@@ -11,20 +11,20 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
         : IKeyRateRepository
     {
         /// <inheritdoc/>
-        public async Task<Guid?> CreateOrUpdateKeyRateAsync(KeyRate KeyRate)
+        public async Task<Guid?> CreateOrUpdateKeyRateAsync(KeyRate keyRate)
         {
             await using var context = await contextFactory.CreateDbContextAsync();
 
             var entity = await context.KeyRateEntities
-                .FirstOrDefaultAsync(x => x.Date == KeyRate.Date);
+                .FirstOrDefaultAsync(x => x.Date == keyRate.Date);
 
             if (entity is null)
             {
                 entity = new KeyRateEntity
                 {
                     Id = Guid.NewGuid(),
-                    Date = KeyRate.Date,
-                    Value = KeyRate.Value
+                    Date = keyRate.Date,
+                    Value = keyRate.Value
                 };
 
                 await context.AddAsync(entity);
@@ -32,7 +32,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
 
             else
             {
-                entity.Value = KeyRate.Value;               
+                entity.Value = keyRate.Value;               
             }
 
             await context.SaveChangesAsync();

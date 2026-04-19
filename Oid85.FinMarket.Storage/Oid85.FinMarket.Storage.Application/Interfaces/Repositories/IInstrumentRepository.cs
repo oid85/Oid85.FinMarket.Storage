@@ -21,5 +21,15 @@ namespace Oid85.FinMarket.Storage.Application.Interfaces.Repositories
         /// Получить активные инструменты
         /// </summary>
         Task<List<Instrument>?> GetActiveInstrumentsAsync();
+
+        /// <summary>
+        /// Получить инструменты
+        /// </summary>
+        Task<List<Instrument>?> GetInstrumentsAsync();
+
+        /// <summary>
+        /// Установить флаг активности
+        /// </summary>
+        Task SetActiveFlagAsync(Guid instrumentId, bool value);
     }
 }

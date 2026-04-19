@@ -8,7 +8,7 @@ using Oid85.FinMarket.Storage.WebHost.Controller.Base;
 namespace Oid85.FinMarket.Storage.WebHost.Controller;
 
 /// <summary>
-/// Фундаментальные параметры
+/// Денежные агрегаты
 /// </summary>
 [Route("api/monetary-aggregates")]
 [ApiController]
@@ -17,7 +17,7 @@ public class MonetaryAggregateController(
     : BaseController
 {
     /// <summary>
-    /// Получить фундаментальные параметры
+    /// Получить список
     /// </summary>
     [HttpPost("list")]
     [ProducesResponseType(typeof(BaseResponse<GetMonetaryAggregateListResponse>), StatusCodes.Status200OK)]
@@ -30,7 +30,7 @@ public class MonetaryAggregateController(
             result => new BaseResponse<GetMonetaryAggregateListResponse> { Result = result });
 
     /// <summary>
-    /// Создать или изменить фундаментальный параметр
+    /// Создать или изменить
     /// </summary>
     [HttpPost("create-or-update")]
     [ProducesResponseType(typeof(BaseResponse<CreateOrUpdateMonetaryAggregateResponse>), StatusCodes.Status200OK)]

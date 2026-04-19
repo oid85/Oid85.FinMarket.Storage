@@ -35,6 +35,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IConsumerPriceIndexChangeRepository, ConsumerPriceIndexChangeRepository>();
         services.AddTransient<IMonetaryAggregateRepository, MonetaryAggregateRepository>();
         services.AddTransient<IKeyRateRepository, KeyRateRepository>();
+        services.AddTransient<IEmitentRepository, EmitentRepository>();
         services.AddTransient<IDividendRepository, DividendRepository>();
         services.AddTransient<IForecastRepository, ForecastRepository>();
     }

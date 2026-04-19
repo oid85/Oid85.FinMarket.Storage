@@ -11,6 +11,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
     /// <inheritdoc/>
     public class InstrumentService(
         IInstrumentRepository instrumentRepository,
+        IEmitentRepository emitentRepository,
         IInvestApiClientAdapter investApiClientAdapter)
         : IInstrumentService
     {
@@ -60,6 +61,34 @@ namespace Oid85.FinMarket.Storage.Application.Services
 
             await LoadLastPricesAsync(instruments);
             await instrumentRepository.DeleteOldBondsAsync();
+
+            instruments = await instrumentRepository.GetInstrumentsAsync();
+            var bonds = instruments!.Where(x => x.Type == KnownInstrumentTypes.Bond).ToList();
+            var emitents = await emitentRepository.GetEmitentsAsync();
+
+            foreach (var bond in bonds)
+            {
+                await instrumentRepository.SetActiveFlagAsync(bond.Id, false);
+
+                if (InstrumentIsMatch(bond))
+                    await instrumentRepository.SetActiveFlagAsync(bond.Id, true);
+            }
+
+            bool InstrumentIsMatch(Instrument instrument)
+            {
+                foreach (var emitent in emitents)
+                {
+                    var keyWords = emitent.KeyWord!.Split(';').ToList();
+
+                    foreach (var keyWord in keyWords)
+                    {
+                        if (instrument.Name.Contains(keyWord))
+                            return true;
+                    }
+                }
+
+                return false;
+            }
         }
 
         private async Task LoadLastPricesAsync(List<Instrument> instruments)

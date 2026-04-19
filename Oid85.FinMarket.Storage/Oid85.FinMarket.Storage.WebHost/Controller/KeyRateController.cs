@@ -8,7 +8,7 @@ using Oid85.FinMarket.Storage.WebHost.Controller.Base;
 namespace Oid85.FinMarket.Storage.WebHost.Controller;
 
 /// <summary>
-/// Фундаментальные параметры
+/// Ключевая ставка
 /// </summary>
 [Route("api/key-rates")]
 [ApiController]
@@ -17,7 +17,7 @@ public class KeyRateController(
     : BaseController
 {
     /// <summary>
-    /// Получить фундаментальные параметры
+    /// Получить данные по ключевой ставке
     /// </summary>
     [HttpPost("list")]
     [ProducesResponseType(typeof(BaseResponse<GetKeyRateListResponse>), StatusCodes.Status200OK)]
@@ -30,7 +30,7 @@ public class KeyRateController(
             result => new BaseResponse<GetKeyRateListResponse> { Result = result });
 
     /// <summary>
-    /// Создать или изменить фундаментальный параметр
+    /// Создать или изменить
     /// </summary>
     [HttpPost("create-or-update")]
     [ProducesResponseType(typeof(BaseResponse<CreateOrUpdateKeyRateResponse>), StatusCodes.Status200OK)]

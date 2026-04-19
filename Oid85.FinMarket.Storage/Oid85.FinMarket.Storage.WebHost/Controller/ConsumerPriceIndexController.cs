@@ -8,7 +8,7 @@ using Oid85.FinMarket.Storage.WebHost.Controller.Base;
 namespace Oid85.FinMarket.Storage.WebHost.Controller;
 
 /// <summary>
-/// Фундаментальные параметры
+/// Индекс потребительский цен
 /// </summary>
 [Route("api/consumer-price-indexes")]
 [ApiController]
@@ -17,7 +17,7 @@ public class ConsumerPriceIndexController(
     : BaseController
 {
     /// <summary>
-    /// Получить фундаментальные параметры
+    /// Получить список
     /// </summary>
     [HttpPost("list")]
     [ProducesResponseType(typeof(BaseResponse<GetConsumerPriceIndexChangeListResponse>), StatusCodes.Status200OK)]
@@ -30,7 +30,7 @@ public class ConsumerPriceIndexController(
             result => new BaseResponse<GetConsumerPriceIndexChangeListResponse> { Result = result });
 
     /// <summary>
-    /// Создать или изменить фундаментальный параметр
+    /// Создать или изменить
     /// </summary>
     [HttpPost("create-or-update")]
     [ProducesResponseType(typeof(BaseResponse<CreateOrUpdateConsumerPriceIndexChangeResponse>), StatusCodes.Status200OK)]
