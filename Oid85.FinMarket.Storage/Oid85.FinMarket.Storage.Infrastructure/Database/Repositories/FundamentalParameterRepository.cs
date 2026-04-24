@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
+using Oid85.FinMarket.Storage.Common.KnownConstants;
 using Oid85.FinMarket.Storage.Core.Models;
 using Oid85.FinMarket.Storage.Infrastructure.Database.Entities;
 
@@ -46,6 +47,20 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
             await context.SaveChangesAsync();
 
             return entity.Id;
+        }
+
+        /// <inheritdoc/>
+        public async Task DeleteFundamentalParameterAsync(FundamentalParameter fundamentalParameter)
+        {
+            await using var context = await contextFactory.CreateDbContextAsync();
+
+            await context.FundamentalParameterEntities
+                .Where(x => x.Ticker == fundamentalParameter.Ticker)
+                .Where(x => x.Type == fundamentalParameter.Type)
+                .Where(x => x.Period == fundamentalParameter.Period)
+                .ExecuteDeleteAsync();
+
+            await context.SaveChangesAsync();
         }
 
         /// <inheritdoc/>

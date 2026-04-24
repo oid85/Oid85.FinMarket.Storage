@@ -43,6 +43,19 @@ public class FundamentalParameterController(
             result => new BaseResponse<CreateOrUpdateFundamentalParameterResponse> { Result = result });
 
     /// <summary>
+    /// Удалить фундаментальный параметр
+    /// </summary>
+    [HttpPost("delete")]
+    [ProducesResponseType(typeof(BaseResponse<DeleteFundamentalParameterResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResponse<DeleteFundamentalParameterResponse>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(BaseResponse<DeleteFundamentalParameterResponse>), StatusCodes.Status500InternalServerError)]
+    public Task<IActionResult> DeleteFundamentalParameterAsync(
+        [FromBody] DeleteFundamentalParameterRequest request) =>
+        GetResponseAsync(
+            () => fundamentalParameterService.DeleteFundamentalParameterAsync(request),
+            result => new BaseResponse<DeleteFundamentalParameterResponse> { Result = result });
+
+    /// <summary>
     /// Импорт дивидендов
     /// </summary>
     [HttpPost("dividend-import")]

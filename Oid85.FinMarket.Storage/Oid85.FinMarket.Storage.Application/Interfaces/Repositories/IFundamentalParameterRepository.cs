@@ -13,6 +13,11 @@ namespace Oid85.FinMarket.Storage.Application.Interfaces.Repositories
         Task<Guid?> CreateOrUpdateFundamentalParameterAsync(FundamentalParameter fundamentalParameter);
 
         /// <summary>
+        /// Удаление фундаментального параметра
+        /// </summary>
+        Task DeleteFundamentalParameterAsync(FundamentalParameter fundamentalParameter);
+
+        /// <summary>
         /// Получить список фундаментальных параметров
         /// </summary>
         /// <returns></returns>
