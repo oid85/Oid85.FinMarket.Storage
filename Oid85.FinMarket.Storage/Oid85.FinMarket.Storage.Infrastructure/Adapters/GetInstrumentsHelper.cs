@@ -6,6 +6,7 @@ using Instrument = Oid85.FinMarket.Storage.Core.Models.Instrument;
 using TinkoffBond = Tinkoff.InvestApi.V1.Bond;
 using TinkoffFuture = Tinkoff.InvestApi.V1.Future;
 using TinkoffShare = Tinkoff.InvestApi.V1.Share;
+using TinkoffEtf = Tinkoff.InvestApi.V1.Etf;
 
 namespace Oid85.FinMarket.Storage.Infrastructure.Adapters;
 
@@ -150,6 +151,43 @@ public class GetInstrumentsHelper(
                     Name = tinkoffInstrument.Name,
                     Currency = tinkoffInstrument.Currency,
                     Type = KnownInstrumentTypes.Index
+                };
+
+                instruments.Add(instrument);
+            }
+
+            return instruments;
+        }
+
+        catch (Exception exception)
+        {
+            logger.Error(exception, "Ошибка получения данных");
+            return [];
+        }
+    }
+
+    public async Task<List<Instrument>> GetEtfsAsync()
+    {
+        try
+        {
+            await Task.Delay(DelayInMilliseconds);
+
+            List<TinkoffEtf> tinkoffInstruments = (await client.Instruments.EtfsAsync()).Instruments
+                .Where(x => x.CountryOfRisk.Equals(KnownCountryCodes.Ru, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            var instruments = new List<Instrument>();
+
+            foreach (var tinkoffInstrument in tinkoffInstruments)
+            {
+                var instrument = new Instrument
+                {
+                    InstrumentId = Guid.Parse(tinkoffInstrument.Uid),
+                    Ticker = tinkoffInstrument.Ticker.Replace("@", ""),
+                    Name = tinkoffInstrument.Name,
+                    Currency = tinkoffInstrument.Currency,
+                    Lot = tinkoffInstrument.Lot,
+                    Type = KnownInstrumentTypes.Etf
                 };
 
                 instruments.Add(instrument);

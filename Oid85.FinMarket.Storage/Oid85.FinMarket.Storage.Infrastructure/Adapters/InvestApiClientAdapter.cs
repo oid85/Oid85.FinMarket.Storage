@@ -32,7 +32,8 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Adapters
                 ..await getInstrumentsHelper.GetSharesAsync(),
                 ..await getInstrumentsHelper.GetFuturesAsync(),
                 ..await getInstrumentsHelper.GetBondsAsync(),
-                ..await getInstrumentsHelper.GetIndexesAsync()
+                ..await getInstrumentsHelper.GetIndexesAsync(),
+                ..await getInstrumentsHelper.GetEtfsAsync()
             ];
     }
 }
