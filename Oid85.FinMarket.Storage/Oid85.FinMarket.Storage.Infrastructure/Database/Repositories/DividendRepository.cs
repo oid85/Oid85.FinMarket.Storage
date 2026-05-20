@@ -56,8 +56,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
         {
             await using var context = await contextFactory.CreateDbContextAsync();
 
-            var entities = await context.DividendInfoEntities
-                .Where(x => x.RecordDate >= DateOnly.FromDateTime(DateTime.Today))
+            var entities = await context.DividendInfoEntities                
                 .OrderBy(x => x.RecordDate)
                 .ToListAsync();
 
