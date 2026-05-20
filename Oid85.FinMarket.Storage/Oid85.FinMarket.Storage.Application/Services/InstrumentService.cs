@@ -19,8 +19,9 @@ namespace Oid85.FinMarket.Storage.Application.Services
         public async Task<GetInstrumentListResponse?> GetInstrumentListAsync(GetInstrumentListRequest request)
         {
             var instruments = (await instrumentRepository.GetActiveInstrumentsAsync() ?? [])
-                .Where(x => 
+                .Where(x =>
                     x.Type == KnownInstrumentTypes.Share ||
+                    x.Type == KnownInstrumentTypes.Etf ||
                     x.Type == KnownInstrumentTypes.Index ||
                     x.Type == KnownInstrumentTypes.Future ||
                     (x.Type == KnownInstrumentTypes.Bond && x.MaturityDate >= DateOnly.FromDateTime(DateTime.Today)))
