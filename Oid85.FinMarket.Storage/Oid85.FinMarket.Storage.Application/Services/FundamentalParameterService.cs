@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection.Metadata;
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
 using Oid85.FinMarket.Storage.Application.Interfaces.Services;
 using Oid85.FinMarket.Storage.Common.Utils;
@@ -120,15 +121,24 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     }
                 }
 
-                await SaveParameterAsync("revenue", "Revenue", 1.0 / 1_000.0); // Выручка
-                await SaveParameterAsync("earnings", "NetProfit", 1.0 / 1_000.0); // Чистая прибыль
-                await SaveParameterAsync("ebitda", "Ebitda", 1.0 / 1_000.0); // EBITDA
-                await SaveParameterAsync("total_assets", "Assets", 1.0 / 1_000.0); // Активы
-                await SaveParameterAsync("total_liabilities", "Liabilities", 1.0 / 1_000.0); // Обязательства
-                await SaveParameterAsync("net_debt", "NetDebt", 1.0 / 1_000.0); // Чистый долг
-                await SaveParameterAsync("equity", "OwnCapital", 1.0 / 1_000.0); // Собственный капитал
-                await SaveParameterAsync("equity_stock_holders", "EquityStockHolders", 1.0 / 1_000.0); // Капитал акционеров
-                await SaveParameterAsync("fcf", "Fcf", 1.0 / 1_000.0); // Свободный денежный поток
+                dictionary.TryGetValue("amount", out var amount);
+
+                var amountValue = StringUtils.ToDouble(amount);
+
+                double coeff = 1.0 / 1_000.0;
+
+                if (amountValue == 1_000.0)
+                    coeff = 1.0 / 1_000_000.0;
+
+                await SaveParameterAsync("revenue", "Revenue", coeff); // Выручка
+                await SaveParameterAsync("earnings", "NetProfit", coeff); // Чистая прибыль
+                await SaveParameterAsync("ebitda", "Ebitda", coeff); // EBITDA
+                await SaveParameterAsync("total_assets", "Assets", coeff); // Активы
+                await SaveParameterAsync("total_liabilities", "Liabilities", coeff); // Обязательства
+                await SaveParameterAsync("net_debt", "NetDebt", coeff); // Чистый долг
+                await SaveParameterAsync("equity", "OwnCapital", coeff); // Собственный капитал
+                await SaveParameterAsync("equity_stock_holders", "EquityStockHolders", coeff); // Капитал акционеров
+                await SaveParameterAsync("fcf", "Fcf", coeff); // Свободный денежный поток
                 await SaveParameterAsync("earnings_ps", "Eps", 1.0); // Прибыль на акцию                
                 await SaveParameterAsync("capital", "MarketCap", 1.0 / 1_000_000_000.0); // Капитализация
                 await SaveParameterAsync("num1", "NumberShares", 1.0 / 1_000_000.0); // Количество акций
@@ -160,7 +170,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                         dictionary.TryGetValue("net_debt", out var netDebt))
                     {
                         double marketCapValue = StringUtils.ToDouble(marketCap) * 1.0 / 1_000_000_000.0;
-                        double netDebtValue = StringUtils.ToDouble(netDebt) * 1.0 / 1_000.0;
+                        double netDebtValue = StringUtils.ToDouble(netDebt) * coeff;
 
                         if (marketCapValue == 0.0 || netDebtValue == 0.0)
                             return;
@@ -185,7 +195,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                         dictionary.TryGetValue("earnings", out var netProfit))
                     {
                         double marketCapValue = StringUtils.ToDouble(marketCap) * 1.0 / 1_000_000_000.0;
-                        double netProfitValue = StringUtils.ToDouble(netProfit) * 1.0 / 1_000.0;
+                        double netProfitValue = StringUtils.ToDouble(netProfit) * coeff;
 
                         if (marketCapValue == 0.0 || netProfitValue == 0.0)
                             return;
@@ -210,7 +220,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                         dictionary.TryGetValue("equity_stock_holders", out var equityStockHolders))
                     {
                         double marketCapValue = StringUtils.ToDouble(marketCap) * 1.0 / 1_000_000_000.0;
-                        double equityStockHoldersValue = StringUtils.ToDouble(equityStockHolders) * 1.0 / 1_000.0;
+                        double equityStockHoldersValue = StringUtils.ToDouble(equityStockHolders) * coeff;
 
                         if (marketCapValue == 0.0 || equityStockHoldersValue == 0.0)
                             return;
@@ -234,8 +244,8 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     if (dictionary.TryGetValue("earnings", out var netProfit) &&
                         dictionary.TryGetValue("equity", out var ownCapital))
                     {
-                        double netProfitValue = StringUtils.ToDouble(netProfit) * 1.0 / 1_000.0;
-                        double ownCapitalValue = StringUtils.ToDouble(ownCapital) * 1.0 / 1_000.0;
+                        double netProfitValue = StringUtils.ToDouble(netProfit) * coeff;
+                        double ownCapitalValue = StringUtils.ToDouble(ownCapital) * coeff;
 
                         if (netProfitValue == 0.0 || ownCapitalValue == 0.0)
                             return;
@@ -259,8 +269,8 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     if (dictionary.TryGetValue("earnings", out var netProfit) &&
                         dictionary.TryGetValue("total_assets", out var assets))
                     {
-                        double netProfitValue = StringUtils.ToDouble(netProfit) * 1.0 / 1_000.0;
-                        double assetsValue = StringUtils.ToDouble(assets) * 1.0 / 1_000.0;
+                        double netProfitValue = StringUtils.ToDouble(netProfit) * coeff;
+                        double assetsValue = StringUtils.ToDouble(assets) * coeff;
 
                         if (netProfitValue == 0.0 || assetsValue == 0.0)
                             return;
