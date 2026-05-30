@@ -56,12 +56,12 @@ public class FundamentalParameterController(
             result => new BaseResponse<DeleteFundamentalParameterResponse> { Result = result });
 
     /// <summary>
-    /// Импорт дивидендов
+    /// Импорт с https://financemarker.ru
     /// </summary>
-    [HttpPost("dividend-import")]
-    public async Task<IActionResult> DividendImportAsync()
+    [HttpPost("financemarker-import")]
+    public async Task<IActionResult> FinanceMarkerImportAsync()
     {
-        await fundamentalParameterService.DividendImportAsync();
+        await fundamentalParameterService.FinanceMarkerImportAsync();
         return Ok();
     }
 }

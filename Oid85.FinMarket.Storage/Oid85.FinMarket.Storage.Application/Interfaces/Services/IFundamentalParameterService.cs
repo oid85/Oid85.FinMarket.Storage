@@ -24,8 +24,8 @@ namespace Oid85.FinMarket.Storage.Application.Interfaces.Services
         Task<GetFundamentalParameterListResponse> GetFundamentalParameterListAsync(GetFundamentalParameterListRequest request);
 
         /// <summary>
-        /// Импорта дивидендов из файла
+        /// Импорт с https://financemarker.ru
         /// </summary>
-        Task DividendImportAsync();        
+        Task FinanceMarkerImportAsync();
     }
 }
