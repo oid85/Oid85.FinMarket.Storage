@@ -186,18 +186,18 @@ namespace Oid85.FinMarket.Storage.Application.Services
 
                 else if (amountValue == 1_000.0)
                 {
-                    revenue             *= 1.0;
-                    netProfit           *= 1.0;
-                    ebitda              *= 1.0;
-                    assets              *= 1.0;
-                    liabilities         *= 1.0;
-                    netDebt             *= 1.0;
-                    ownCapital          *= 1.0;
-                    equityStockHolders  *= 1.0;
-                    fcf                 *= 1.0;
+                    revenue             *= 1.0 / 1_000_000.0;
+                    netProfit           *= 1.0 / 1_000_000.0;
+                    ebitda              *= 1.0 / 1_000_000.0;
+                    assets              *= 1.0 / 1_000_000.0;
+                    liabilities         *= 1.0 / 1_000_000.0;
+                    netDebt             *= 1.0 / 1_000_000.0;
+                    ownCapital          *= 1.0 / 1_000_000.0;
+                    equityStockHolders  *= 1.0 / 1_000_000.0;
+                    fcf                 *= 1.0 / 1_000_000.0;
                     eps                 *= 1.0;
-                    marketCap           *= 1.0;
-                    numberShares        *= 1.0;
+                    marketCap           *= 1.0 / 1_000_000_000.0;
+                    numberShares        *= 1.0 / 1_000_000.0;
                 }
 
                 await SaveAsync("Revenue", revenue); 
