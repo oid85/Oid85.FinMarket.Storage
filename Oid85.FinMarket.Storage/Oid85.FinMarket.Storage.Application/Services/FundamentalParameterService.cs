@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Common;
 using System.Reflection.Metadata;
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
 using Oid85.FinMarket.Storage.Application.Interfaces.Services;
@@ -121,172 +122,223 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     }
                 }
 
+                double? revenue = null;             // Выручка
+                double? netProfit = null;           // Чистая прибыль
+                double? ebitda = null;              // EBITDA
+                double? assets = null;              // Активы
+                double? liabilities = null;         // Обязательства
+                double? netDebt = null;             // Чистый долг
+                double? ownCapital = null;          // Собственный капитал
+                double? equityStockHolders = null;  // Капитал акционеров
+                double? fcf = null;                 // Свободный денежный поток
+                double? eps = null;                 // Прибыль на акцию
+                double? marketCap = null;           // Капитализация
+                double? numberShares = null;        // Количество акций
+
                 dictionary.TryGetValue("amount", out var amount);
+
+                revenue             = GetFromDictionary("revenue");
+                netProfit           = GetFromDictionary("earnings");
+                ebitda              = GetFromDictionary("ebitda");
+                assets              = GetFromDictionary("total_assets");
+                liabilities         = GetFromDictionary("total_liabilities");
+                netDebt             = GetFromDictionary("net_debt");
+                ownCapital          = GetFromDictionary("equity");
+                equityStockHolders  = GetFromDictionary("equity_stock_holders");
+                fcf                 = GetFromDictionary("fcf");
+                eps                 = GetFromDictionary("earnings_ps");
+                marketCap           = GetFromDictionary("capital");
+                numberShares        = GetFromDictionary("num1");
 
                 var amountValue = StringUtils.ToDouble(amount);
 
-                double coeff = 1.0 / 1_000.0;
+                if (amountValue == 1_000_000_000.0)
+                {
+                    revenue             *= 1.0;
+                    netProfit           *= 1.0;
+                    ebitda              *= 1.0;
+                    assets              *= 1.0;
+                    liabilities         *= 1.0;
+                    netDebt             *= 1.0;
+                    ownCapital          *= 1.0;
+                    equityStockHolders  *= 1.0;
+                    fcf                 *= 1.0;
+                    eps                 *= 1.0;
+                    marketCap           *= 1.0 / 1_000_000_000.0;
+                    numberShares        *= 1.0 / 1_000_000.0;
+                }
 
-                if (amountValue == 1_000.0)
-                    coeff = 1.0 / 1_000_000.0;
+                else if (amountValue == 1_000_000.0)
+                {
+                    revenue             *= 1.0 / 1_000.0;
+                    netProfit           *= 1.0 / 1_000.0;
+                    ebitda              *= 1.0 / 1_000.0;
+                    assets              *= 1.0 / 1_000.0;
+                    liabilities         *= 1.0 / 1_000.0;
+                    netDebt             *= 1.0 / 1_000.0;
+                    ownCapital          *= 1.0 / 1_000.0;
+                    equityStockHolders  *= 1.0 / 1_000.0;
+                    fcf                 *= 1.0 / 1_000.0;
+                    eps                 *= 1.0;
+                    marketCap           *= 1.0 / 1_000_000_000.0;
+                    numberShares        *= 1.0 / 1_000_000.0;
+                }
 
-                await SaveParameterAsync("revenue", "Revenue", coeff); // Выручка
-                await SaveParameterAsync("earnings", "NetProfit", coeff); // Чистая прибыль
-                await SaveParameterAsync("ebitda", "Ebitda", coeff); // EBITDA
-                await SaveParameterAsync("total_assets", "Assets", coeff); // Активы
-                await SaveParameterAsync("total_liabilities", "Liabilities", coeff); // Обязательства
-                await SaveParameterAsync("net_debt", "NetDebt", coeff); // Чистый долг
-                await SaveParameterAsync("equity", "OwnCapital", coeff); // Собственный капитал
-                await SaveParameterAsync("equity_stock_holders", "EquityStockHolders", coeff); // Капитал акционеров
-                await SaveParameterAsync("fcf", "Fcf", coeff); // Свободный денежный поток
-                await SaveParameterAsync("earnings_ps", "Eps", 1.0); // Прибыль на акцию                
-                await SaveParameterAsync("capital", "MarketCap", 1.0 / 1_000_000_000.0); // Капитализация
-                await SaveParameterAsync("num1", "NumberShares", 1.0 / 1_000_000.0); // Количество акций
+                else if (amountValue == 1_000.0)
+                {
+                    revenue             *= 1.0;
+                    netProfit           *= 1.0;
+                    ebitda              *= 1.0;
+                    assets              *= 1.0;
+                    liabilities         *= 1.0;
+                    netDebt             *= 1.0;
+                    ownCapital          *= 1.0;
+                    equityStockHolders  *= 1.0;
+                    fcf                 *= 1.0;
+                    eps                 *= 1.0;
+                    marketCap           *= 1.0;
+                    numberShares        *= 1.0;
+                }
+
+                await SaveAsync("Revenue", revenue); 
+                await SaveAsync("NetProfit", netProfit); 
+                await SaveAsync("Ebitda", ebitda); 
+                await SaveAsync("Assets", assets); 
+                await SaveAsync("Liabilities", liabilities); 
+                await SaveAsync("NetDebt", netDebt); 
+                await SaveAsync("OwnCapital", ownCapital); 
+                await SaveAsync("EquityStockHolders", equityStockHolders); 
+                await SaveAsync("Fcf", fcf); 
+                await SaveAsync("Eps", eps);                 
+                await SaveAsync("MarketCap", marketCap); 
+                await SaveAsync("NumberShares", numberShares); 
+
                 await SaveEvAsync();
                 await SavePeAsync();
                 await SavePbvAsync();
                 await SaveRoeAsync();
                 await SaveRoaAsync();
 
-                async Task SaveParameterAsync(string fileAlias, string dataBaseAlias, double coeff)
+                double? GetFromDictionary(string key)
                 {
-                    if (dictionary.TryGetValue(fileAlias, out var parameter))
-                    {
+                    dictionary.TryGetValue(key, out var stringValue);
+                    return StringUtils.ToDouble(stringValue);
+                }
+
+                async Task SaveAsync(string type, double? value)
+                {
+                    if (value.HasValue)
                         await fundamentalParameterRepository.CreateOrUpdateFundamentalParameterAsync(
                             new FundamentalParameter
                             {
                                 Ticker = ticker,
-                                Type = dataBaseAlias,
+                                Type = type,
                                 Period = year,
-                                Value = StringUtils.ToDouble(parameter) * coeff,
+                                Value = value.Value,
                                 ExtData = string.Empty
                             });
-                    }
                 }
 
                 async Task SaveEvAsync()
                 {
-                    if (dictionary.TryGetValue("capital", out var marketCap) &&
-                        dictionary.TryGetValue("net_debt", out var netDebt))
-                    {
-                        double marketCapValue = StringUtils.ToDouble(marketCap) * 1.0 / 1_000_000_000.0;
-                        double netDebtValue = StringUtils.ToDouble(netDebt) * coeff;
+                    if (!marketCap.HasValue || !netDebt.HasValue)
+                        return;
 
-                        if (marketCapValue == 0.0 || netDebtValue == 0.0)
-                            return;
+                    var ev = marketCap.Value + netDebt.Value;
 
-                        var ev = marketCapValue + netDebtValue;
-
-                        await fundamentalParameterRepository.CreateOrUpdateFundamentalParameterAsync(
-                            new FundamentalParameter
-                            {
-                                Ticker = ticker,
-                                Type = "Ev",
-                                Period = year,
-                                Value = ev,
-                                ExtData = string.Empty
-                            });
-                    }
+                    await fundamentalParameterRepository.CreateOrUpdateFundamentalParameterAsync(
+                        new FundamentalParameter
+                        {
+                            Ticker = ticker,
+                            Type = "Ev",
+                            Period = year,
+                            Value = ev,
+                            ExtData = string.Empty
+                        });
                 }
 
                 async Task SavePeAsync()
                 {
-                    if (dictionary.TryGetValue("capital", out var marketCap) &&
-                        dictionary.TryGetValue("earnings", out var netProfit))
-                    {
-                        double marketCapValue = StringUtils.ToDouble(marketCap) * 1.0 / 1_000_000_000.0;
-                        double netProfitValue = StringUtils.ToDouble(netProfit) * coeff;
+                    if (!marketCap.HasValue || !netProfit.HasValue)
+                        return;
 
-                        if (marketCapValue == 0.0 || netProfitValue == 0.0)
-                            return;
+                    if (netProfit.Value == 0.0)
+                        return;
 
-                        var pe = marketCapValue / netProfitValue;
+                    var pe = marketCap.Value / netProfit.Value;
 
-                        await fundamentalParameterRepository.CreateOrUpdateFundamentalParameterAsync(
-                            new FundamentalParameter
-                            {
-                                Ticker = ticker,
-                                Type = "Pe",
-                                Period = year,
-                                Value = pe,
-                                ExtData = string.Empty
-                            });
-                    }
+                    await fundamentalParameterRepository.CreateOrUpdateFundamentalParameterAsync(
+                        new FundamentalParameter
+                        {
+                            Ticker = ticker,
+                            Type = "Pe",
+                            Period = year,
+                            Value = pe,
+                            ExtData = string.Empty
+                        });
                 }
 
                 async Task SavePbvAsync()
                 {
-                    if (dictionary.TryGetValue("capital", out var marketCap) &&
-                        dictionary.TryGetValue("equity_stock_holders", out var equityStockHolders))
-                    {
-                        double marketCapValue = StringUtils.ToDouble(marketCap) * 1.0 / 1_000_000_000.0;
-                        double equityStockHoldersValue = StringUtils.ToDouble(equityStockHolders) * coeff;
+                    if (!marketCap.HasValue || !equityStockHolders.HasValue)
+                        return;
 
-                        if (marketCapValue == 0.0 || equityStockHoldersValue == 0.0)
-                            return;
+                    if (equityStockHolders.Value == 0.0)
+                        return;
 
-                        var pbv = marketCapValue / equityStockHoldersValue;
+                    var pbv = marketCap.Value / equityStockHolders.Value;
 
-                        await fundamentalParameterRepository.CreateOrUpdateFundamentalParameterAsync(
-                            new FundamentalParameter
-                            {
-                                Ticker = ticker,
-                                Type = "Pbv",
-                                Period = year,
-                                Value = pbv,
-                                ExtData = string.Empty
-                            });
-                    }
+                    await fundamentalParameterRepository.CreateOrUpdateFundamentalParameterAsync(
+                        new FundamentalParameter
+                        {
+                            Ticker = ticker,
+                            Type = "Pbv",
+                            Period = year,
+                            Value = pbv,
+                            ExtData = string.Empty
+                        });
                 }
 
                 async Task SaveRoeAsync()
                 {
-                    if (dictionary.TryGetValue("earnings", out var netProfit) &&
-                        dictionary.TryGetValue("equity", out var ownCapital))
-                    {
-                        double netProfitValue = StringUtils.ToDouble(netProfit) * coeff;
-                        double ownCapitalValue = StringUtils.ToDouble(ownCapital) * coeff;
+                    if (!netProfit.HasValue || !ownCapital.HasValue)
+                        return;
 
-                        if (netProfitValue == 0.0 || ownCapitalValue == 0.0)
-                            return;
+                    if (ownCapital.Value == 0.0)
+                        return;
 
-                        var roe = netProfitValue / ownCapitalValue * 100.0;
+                    var roe = netProfit.Value / ownCapital.Value * 100.0;
 
-                        await fundamentalParameterRepository.CreateOrUpdateFundamentalParameterAsync(
-                            new FundamentalParameter
-                            {
-                                Ticker = ticker,
-                                Type = "Roe",
-                                Period = year,
-                                Value = roe,
-                                ExtData = string.Empty
-                            });
-                    }
+                    await fundamentalParameterRepository.CreateOrUpdateFundamentalParameterAsync(
+                        new FundamentalParameter
+                        {
+                            Ticker = ticker,
+                            Type = "Roe",
+                            Period = year,
+                            Value = roe,
+                            ExtData = string.Empty
+                        });
                 }
 
                 async Task SaveRoaAsync()
                 {
-                    if (dictionary.TryGetValue("earnings", out var netProfit) &&
-                        dictionary.TryGetValue("total_assets", out var assets))
-                    {
-                        double netProfitValue = StringUtils.ToDouble(netProfit) * coeff;
-                        double assetsValue = StringUtils.ToDouble(assets) * coeff;
+                    if (!netProfit.HasValue || !assets.HasValue)
+                        return;
 
-                        if (netProfitValue == 0.0 || assetsValue == 0.0)
-                            return;
+                    if (assets.Value == 0.0)
+                        return;
 
-                        var roa = netProfitValue / assetsValue * 100.0;
+                    var roa = netProfit.Value / assets.Value * 100.0;
 
-                        await fundamentalParameterRepository.CreateOrUpdateFundamentalParameterAsync(
-                            new FundamentalParameter
-                            {
-                                Ticker = ticker,
-                                Type = "Roa",
-                                Period = year,
-                                Value = roa,
-                                ExtData = string.Empty
-                            });
-                    }
+                    await fundamentalParameterRepository.CreateOrUpdateFundamentalParameterAsync(
+                        new FundamentalParameter
+                        {
+                            Ticker = ticker,
+                            Type = "Roa",
+                            Period = year,
+                            Value = roa,
+                            ExtData = string.Empty
+                        });
                 }
             }
         }
