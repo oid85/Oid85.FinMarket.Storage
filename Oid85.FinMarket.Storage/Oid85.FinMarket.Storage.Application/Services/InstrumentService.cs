@@ -53,6 +53,29 @@ namespace Oid85.FinMarket.Storage.Application.Services
         }
 
         /// <inheritdoc/>
+        public async Task<GetInstrumentPriceResponse> GetInstrumentPriceAsync(GetInstrumentPriceRequest request)
+        {
+            var instruments = (await instrumentRepository.GetInstrumentsAsync() ?? [])
+                .Where(x => request.Tickers.Contains(x.Ticker))
+                .ToList();
+
+            var instrumentIds = instruments.Select(x => x.InstrumentId).ToList();
+            var lastPrices = await investApiClientAdapter.GetLastPricesAsync(instrumentIds);
+
+            var response = new GetInstrumentPriceResponse();
+
+            for (int i = 0; i < instruments.Count; i++)
+                response.Items.Add(
+                    new TickerPriceItem
+                    {
+                        Ticker = instruments[i].Ticker,
+                        Price = lastPrices[i]
+                    });
+
+            return response;
+        }
+
+        /// <inheritdoc/>
         public async Task LoadInstrumentsAsync()
         {
             var instruments = await investApiClientAdapter.GetInstrumentsAsync();

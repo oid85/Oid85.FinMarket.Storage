@@ -28,4 +28,17 @@ public class InstrumentsController(
         GetResponseAsync(
             () => instrumentService.GetInstrumentListAsync(request),
             result => new BaseResponse<GetInstrumentListResponse> { Result = result });
+
+    /// <summary>
+    /// Получить цены
+    /// </summary>
+    [HttpPost("price")]
+    [ProducesResponseType(typeof(BaseResponse<GetInstrumentPriceResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResponse<GetInstrumentPriceResponse>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(BaseResponse<GetInstrumentPriceResponse>), StatusCodes.Status500InternalServerError)]
+    public Task<IActionResult> GetInstrumentPriceAsync(
+        [FromBody] GetInstrumentPriceRequest request) =>
+        GetResponseAsync(
+            () => instrumentService.GetInstrumentPriceAsync(request),
+            result => new BaseResponse<GetInstrumentPriceResponse> { Result = result });
 }

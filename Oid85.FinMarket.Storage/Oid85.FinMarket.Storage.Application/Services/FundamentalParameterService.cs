@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data.Common;
-using System.Reflection.Metadata;
-using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
+﻿using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
 using Oid85.FinMarket.Storage.Application.Interfaces.Services;
 using Oid85.FinMarket.Storage.Common.Utils;
 using Oid85.FinMarket.Storage.Core.Models;

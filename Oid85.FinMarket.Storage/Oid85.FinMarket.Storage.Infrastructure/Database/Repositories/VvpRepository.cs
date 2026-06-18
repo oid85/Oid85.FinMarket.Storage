@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
 using Oid85.FinMarket.Storage.Core.Models;
-using Oid85.FinMarket.Storage.Infrastructure.Database.Entities;
 
 namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
 {
