@@ -124,6 +124,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                 double? ebitda = null;              // EBITDA
                 double? assets = null;              // Активы
                 double? liabilities = null;         // Обязательства
+                double? capex = null;               // CAPEX
                 double? netDebt = null;             // Чистый долг
                 double? ownCapital = null;          // Собственный капитал
                 double? equityStockHolders = null;  // Капитал акционеров
@@ -131,7 +132,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                 double? eps = null;                 // Прибыль на акцию
                 double? marketCap = null;           // Капитализация
                 double? numberShares = null;        // Количество акций
-
+                
                 dictionary.TryGetValue("amount", out var amount);
 
                 revenue             = GetFromDictionary("revenue");
@@ -139,6 +140,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                 ebitda              = GetFromDictionary("ebitda");
                 assets              = GetFromDictionary("total_assets");
                 liabilities         = GetFromDictionary("total_liabilities");
+                capex               = GetFromDictionary("capex");
                 netDebt             = GetFromDictionary("net_debt");
                 ownCapital          = GetFromDictionary("equity");
                 equityStockHolders  = GetFromDictionary("equity_stock_holders");
@@ -146,7 +148,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                 eps                 = GetFromDictionary("earnings_ps");
                 marketCap           = GetFromDictionary("capital");
                 numberShares        = GetFromDictionary("num1");
-
+                
                 var amountValue = StringUtils.ToDouble(amount);
 
                 if (amountValue == 1_000_000_000.0)
@@ -156,6 +158,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     ebitda              *= 1.0;
                     assets              *= 1.0;
                     liabilities         *= 1.0;
+                    capex               *= 1.0;
                     netDebt             *= 1.0;
                     ownCapital          *= 1.0;
                     equityStockHolders  *= 1.0;
@@ -170,8 +173,9 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     revenue             *= 1.0 / 1_000.0;
                     netProfit           *= 1.0 / 1_000.0;
                     ebitda              *= 1.0 / 1_000.0;
-                    assets              *= 1.0 / 1_000.0;
+                    assets              *= 1.0 / 1_000.0;                    
                     liabilities         *= 1.0 / 1_000.0;
+                    capex               *= 1.0 / 1_000.0;
                     netDebt             *= 1.0 / 1_000.0;
                     ownCapital          *= 1.0 / 1_000.0;
                     equityStockHolders  *= 1.0 / 1_000.0;
@@ -187,6 +191,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     netProfit           *= 1.0 / 1_000_000.0;
                     ebitda              *= 1.0 / 1_000_000.0;
                     assets              *= 1.0 / 1_000_000.0;
+                    capex               *= 1.0 / 1_000_000.0;
                     liabilities         *= 1.0 / 1_000_000.0;
                     netDebt             *= 1.0 / 1_000_000.0;
                     ownCapital          *= 1.0 / 1_000_000.0;
@@ -199,8 +204,9 @@ namespace Oid85.FinMarket.Storage.Application.Services
 
                 await SaveAsync("Revenue", revenue); 
                 await SaveAsync("NetProfit", netProfit); 
-                await SaveAsync("Ebitda", ebitda); 
-                await SaveAsync("Assets", assets); 
+                await SaveAsync("Ebitda", ebitda);
+                await SaveAsync("Assets", assets);
+                await SaveAsync("Capex", capex);
                 await SaveAsync("Liabilities", liabilities); 
                 await SaveAsync("NetDebt", netDebt); 
                 await SaveAsync("OwnCapital", ownCapital); 
