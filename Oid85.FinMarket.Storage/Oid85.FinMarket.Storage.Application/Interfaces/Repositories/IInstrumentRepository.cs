@@ -31,5 +31,10 @@ namespace Oid85.FinMarket.Storage.Application.Interfaces.Repositories
         /// Установить флаг активности
         /// </summary>
         Task SetActiveFlagAsync(Guid instrumentId, bool value);
+
+        /// <summary>
+        /// Установить кредитный рейтинг
+        /// </summary>
+        Task SetRatingAsync(Guid instrumentId, string value);
     }
 }

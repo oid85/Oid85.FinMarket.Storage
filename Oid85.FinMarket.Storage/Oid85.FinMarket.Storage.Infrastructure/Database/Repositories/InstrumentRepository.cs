@@ -34,6 +34,9 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
 
                 if (instrument.Lot is not null)
                     entity.Lot = instrument.Lot;
+
+                if (instrument.Rating is not null)
+                    entity.Rating = instrument.Rating;
             }
 
             else
@@ -51,7 +54,8 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                     Nominal = instrument.Nominal,
                     Currency = instrument.Currency,
                     Lot = instrument.Lot,
-                    Type = instrument.Type                   
+                    Type = instrument.Type,
+                    Rating = instrument.Rating
                 };
 
                 await context.AddAsync(entity);
@@ -102,7 +106,8 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                         Nominal = x.Nominal,
                         Currency = x.Currency,
                         Lot = x.Lot,
-                        IsActive = x.IsActive
+                        IsActive = x.IsActive,
+                        Rating = x.Rating
                     })
                 .ToList();
 
@@ -135,7 +140,8 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                         Nominal = x.Nominal,
                         Currency = x.Currency,
                         Lot = x.Lot,
-                        IsActive = x.IsActive
+                        IsActive = x.IsActive,
+                        Rating = x.Rating
                     })
                 .ToList();
 
@@ -153,6 +159,21 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                 return;
 
             entity.IsActive = value;
+
+            await context.SaveChangesAsync();
+        }
+
+        /// <inheritdoc/>
+        public async Task SetRatingAsync(Guid instrumentId, string value)
+        {
+            await using var context = await contextFactory.CreateDbContextAsync();
+
+            var entity = await context.InstrumentEntities.FirstOrDefaultAsync(x => x.Id == instrumentId);
+
+            if (entity is null)
+                return;
+
+            entity.Rating = value;
 
             await context.SaveChangesAsync();
         }

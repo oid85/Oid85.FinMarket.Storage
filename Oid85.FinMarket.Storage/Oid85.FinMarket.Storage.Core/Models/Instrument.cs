@@ -66,5 +66,10 @@ namespace Oid85.FinMarket.Storage.Core.Models
         /// Лот
         /// </summary>
         public int? Lot { get; set; }
+
+        /// <summary>
+        /// Кредитный рейтинг
+        /// </summary>
+        public string? Rating { get; set; }
     }
 }

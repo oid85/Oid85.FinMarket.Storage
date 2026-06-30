@@ -44,7 +44,8 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     Nominal = x.Nominal,
                     LastPrice = x.LastPrice,
                     Currency = x.Currency,
-                    Lot = x.Lot
+                    Lot = x.Lot,
+                    Rating = x.Rating
                 })
                 .ToList()
             };
@@ -94,11 +95,11 @@ namespace Oid85.FinMarket.Storage.Application.Services
             {
                 await instrumentRepository.SetActiveFlagAsync(bond.Id, false);
 
-                if (InstrumentIsMatch(bond))
+                if (await InstrumentIsMatchAsync(bond))
                     await instrumentRepository.SetActiveFlagAsync(bond.Id, true);
             }
 
-            bool InstrumentIsMatch(Instrument instrument)
+            async Task<bool> InstrumentIsMatchAsync(Instrument instrument)
             {
                 foreach (var emitent in emitents)
                 {
@@ -107,7 +108,10 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     foreach (var keyWord in keyWords)
                     {
                         if (instrument.Name.Contains(keyWord))
+                        {
+                            await instrumentRepository.SetRatingAsync(instrument.Id, emitent.Rating ?? string.Empty);
                             return true;
+                        }
                     }
                 }
 
