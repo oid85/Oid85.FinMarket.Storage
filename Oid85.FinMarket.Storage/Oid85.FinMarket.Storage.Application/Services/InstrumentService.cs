@@ -45,7 +45,8 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     LastPrice = x.LastPrice,
                     Currency = x.Currency,
                     Lot = x.Lot,
-                    Rating = x.Rating
+                    Rating = x.Rating,
+                    FloatingCouponFlag = x.FloatingCouponFlag
                 })
                 .ToList()
             };

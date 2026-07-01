@@ -73,5 +73,10 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Entities
         /// Кредитный рейтинг
         /// </summary>
         public string? Rating { get; set; }
+
+        /// <summary>
+        /// Признак плавающего купона
+        /// </summary>
+        public bool? FloatingCouponFlag { get; set; }
     }
 }

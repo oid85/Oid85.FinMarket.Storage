@@ -37,6 +37,9 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
 
                 if (instrument.Rating is not null)
                     entity.Rating = instrument.Rating;
+
+                if (instrument.FloatingCouponFlag is not null)
+                    entity.FloatingCouponFlag = instrument.FloatingCouponFlag;
             }
 
             else
@@ -55,7 +58,8 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                     Currency = instrument.Currency,
                     Lot = instrument.Lot,
                     Type = instrument.Type,
-                    Rating = instrument.Rating
+                    Rating = instrument.Rating,
+                    FloatingCouponFlag = instrument.FloatingCouponFlag
                 };
 
                 await context.AddAsync(entity);
@@ -107,7 +111,8 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                         Currency = x.Currency,
                         Lot = x.Lot,
                         IsActive = x.IsActive,
-                        Rating = x.Rating
+                        Rating = x.Rating,
+                        FloatingCouponFlag = x.FloatingCouponFlag
                     })
                 .ToList();
 
@@ -141,7 +146,8 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
                         Currency = x.Currency,
                         Lot = x.Lot,
                         IsActive = x.IsActive,
-                        Rating = x.Rating
+                        Rating = x.Rating,
+                        FloatingCouponFlag = x.FloatingCouponFlag
                     })
                 .ToList();
 

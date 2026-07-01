@@ -114,7 +114,8 @@ public class GetInstrumentsHelper(
                     Nominal = ConvertHelper.MoneyValueToDouble(tinkoffInstrument.Nominal),
                     Currency = tinkoffInstrument.Currency,
                     Lot = tinkoffInstrument.Lot,
-                    Type = KnownInstrumentTypes.Bond
+                    Type = KnownInstrumentTypes.Bond,
+                    FloatingCouponFlag = tinkoffInstrument.FloatingCouponFlag
                 };
 
                 instruments.Add(instrument);
