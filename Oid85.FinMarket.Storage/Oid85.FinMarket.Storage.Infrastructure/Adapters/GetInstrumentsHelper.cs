@@ -2,11 +2,12 @@
 using Oid85.FinMarket.Storage.Common.KnownConstants;
 using Tinkoff.InvestApi;
 using Tinkoff.InvestApi.V1;
+using static Google.Rpc.Context.AttributeContext.Types;
 using Instrument = Oid85.FinMarket.Storage.Core.Models.Instrument;
 using TinkoffBond = Tinkoff.InvestApi.V1.Bond;
+using TinkoffEtf = Tinkoff.InvestApi.V1.Etf;
 using TinkoffFuture = Tinkoff.InvestApi.V1.Future;
 using TinkoffShare = Tinkoff.InvestApi.V1.Share;
-using TinkoffEtf = Tinkoff.InvestApi.V1.Etf;
 
 namespace Oid85.FinMarket.Storage.Infrastructure.Adapters;
 
@@ -47,7 +48,7 @@ public class GetInstrumentsHelper(
 
         catch (Exception exception)
         {
-            logger.Error(exception, "Ошибка получения данных");
+            logger.Error(exception, "Ошибка получения данных. {message}", exception.Message);
             return [];
         }
     }
@@ -83,7 +84,7 @@ public class GetInstrumentsHelper(
 
         catch (Exception exception)
         {
-            logger.Error(exception, "Ошибка получения данных");
+            logger.Error(exception, "Ошибка получения данных. {message}", exception.Message);
             return [];
         }
     }
@@ -126,7 +127,7 @@ public class GetInstrumentsHelper(
 
         catch (Exception exception)
         {
-            logger.Error(exception, "Ошибка получения данных");
+            logger.Error(exception, "Ошибка получения данных. {message}", exception.Message);
             return [];
         }
     }
@@ -162,7 +163,7 @@ public class GetInstrumentsHelper(
 
         catch (Exception exception)
         {
-            logger.Error(exception, "Ошибка получения данных");
+            logger.Error(exception, "Ошибка получения данных. {message}", exception.Message);
             return [];
         }
     }
@@ -199,7 +200,7 @@ public class GetInstrumentsHelper(
 
         catch (Exception exception)
         {
-            logger.Error(exception, "Ошибка получения данных");
+            logger.Error(exception, "Ошибка получения данных. {message}", exception.Message);
             return [];
         }
     }

@@ -54,7 +54,7 @@ public class GetCandlesHelper(
         
         catch (Exception exception)
         {
-            logger.Error(exception, "Ошибка получения данных. {request}", request);
+            logger.Error(exception, "Ошибка получения данных. {request}. {message}", request, exception.Message);
             return null;
         }
     }
