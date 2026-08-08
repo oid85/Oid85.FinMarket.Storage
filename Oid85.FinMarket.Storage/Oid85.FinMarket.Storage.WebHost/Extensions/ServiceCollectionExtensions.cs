@@ -1,6 +1,4 @@
 ﻿using Hangfire;
-using Microsoft.OpenApi.Any;
-using Microsoft.OpenApi.Models;
 using NLog;
 using ILogger = NLog.ILogger;
 
@@ -17,29 +15,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient(typeof(ILogger), _ => 
             LogManager.GetLogger(AppDomain.CurrentDomain.FriendlyName));
     }
-
-    public static void ConfigureSwagger(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddSwaggerGen(options =>
-        {
-            options.MapType<DateOnly>(() => new OpenApiSchema
-            {
-                Type = "string",
-                Format = "date",
-                Example = new OpenApiString(DateOnly.FromDateTime(DateTime.Today).ToString("yyyy-MM-dd"))
-            });            
-            
-            options.SwaggerDoc("v1", new OpenApiInfo
-            {
-                Version = "v1",
-                Title = "Api",
-                Description = AppDomain.CurrentDomain.FriendlyName
-            });
-
-            options.IncludeXmlComments(GetXmlCommentsPath());
-        });
-    }
-
+    
     public static void ConfigureCors(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddCors(options =>
@@ -62,7 +38,4 @@ public static class ServiceCollectionExtensions
         services.AddHangfire(config => config.UseInMemoryStorage());
         services.AddHangfireServer();
     }
-
-    private static string GetXmlCommentsPath() => 
-        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SwaggerTest.XML");
 }

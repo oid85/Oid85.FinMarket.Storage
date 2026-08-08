@@ -23,7 +23,6 @@ namespace Oid85.FinMarket.Storage.WebHost
 
             builder.Services.AddMemoryCache();
             builder.Services.ConfigureLogger();
-            builder.Services.ConfigureSwagger(builder.Configuration);
             builder.Services.ConfigureCors(builder.Configuration);
             builder.Services.ConfigureHangfire();
             builder.Services.ConfigureApplicationServices();
@@ -34,6 +33,8 @@ namespace Oid85.FinMarket.Storage.WebHost
             {
                 options.ServiceName = "Oid85.FinMarket.Storage";
             });
+
+            builder.Services.AddOpenApi();
 
             bool applyMigrations = builder.Configuration.GetValue<bool>(KnownSettingsKeys.PostgresApplyMigrationsOnStart);
             int port = builder.Configuration.GetValue<int>(KnownSettingsKeys.DeployPort);
@@ -46,19 +47,19 @@ namespace Oid85.FinMarket.Storage.WebHost
             app.UseRouting();
 
             app.UseCors("CorsPolicy");
-
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
-            {
-                options.RoutePrefix = "";
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Api v1");
-            });
-
+           
             app.UseHangfireDashboard("/dashboard");
 
             await app.RegisterHangfireJobs(builder.Configuration);
 
             app.MapControllers();
+
+            app.MapOpenApi();
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/openapi/v1.json", "v1");
+            });
 
             app.Urls.Add($"http://0.0.0.0:{port}");
 
