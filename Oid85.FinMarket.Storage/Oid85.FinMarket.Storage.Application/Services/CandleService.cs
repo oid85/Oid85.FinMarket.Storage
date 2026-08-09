@@ -71,8 +71,9 @@ namespace Oid85.FinMarket.Storage.Application.Services
         public async Task LoadCandlesAsync()
         {
             var instruments = (await instrumentRepository.GetActiveInstrumentsAsync())?
-                .Where(x => x.Type == KnownInstrumentTypes.Share)
-                .Where(x => x.Type == KnownInstrumentTypes.Future)
+                .Where(x => 
+                    x.Type == KnownInstrumentTypes.Share || 
+                    x.Type == KnownInstrumentTypes.Future)
                 .ToList();
 
             if (instruments is null)
