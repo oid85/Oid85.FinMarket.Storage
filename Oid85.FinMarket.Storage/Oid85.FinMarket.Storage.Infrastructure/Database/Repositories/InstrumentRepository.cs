@@ -40,6 +40,9 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
 
                 if (instrument.FloatingCouponFlag is not null)
                     entity.FloatingCouponFlag = instrument.FloatingCouponFlag;
+
+                if (instrument.MaturityDate is not null)
+                    entity.MaturityDate = instrument.MaturityDate;
             }
 
             else
