@@ -73,6 +73,7 @@ public class GetInstrumentsHelper(
                     Name = tinkoffInstrument.Name,
                     Currency = tinkoffInstrument.Currency,
                     Lot = tinkoffInstrument.Lot,
+                    MaturityDate = ConvertHelper.TimestampToDateOnly(tinkoffInstrument.ExpirationDate),
                     Type = KnownInstrumentTypes.Future
                 };
 
