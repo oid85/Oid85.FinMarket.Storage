@@ -23,7 +23,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     x.Type == KnownInstrumentTypes.Share ||
                     x.Type == KnownInstrumentTypes.Etf ||
                     x.Type == KnownInstrumentTypes.Index ||
-                    x.Type == KnownInstrumentTypes.Future ||
+                    (x.Type == KnownInstrumentTypes.Future && x.MaturityDate >= DateOnly.FromDateTime(DateTime.Today)) ||
                     (x.Type == KnownInstrumentTypes.Bond && x.MaturityDate >= DateOnly.FromDateTime(DateTime.Today)))
                 .ToList();
 
