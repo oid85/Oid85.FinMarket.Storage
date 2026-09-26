@@ -1,4 +1,5 @@
-﻿using Oid85.FinMarket.Storage.Application.Interfaces.Adapters;
+﻿using System.Diagnostics.Metrics;
+using Oid85.FinMarket.Storage.Application.Interfaces.Adapters;
 using Oid85.FinMarket.Storage.Application.Interfaces.Repositories;
 using Oid85.FinMarket.Storage.Application.Interfaces.Services;
 using Oid85.FinMarket.Storage.Common.KnownConstants;
@@ -82,53 +83,78 @@ namespace Oid85.FinMarket.Storage.Application.Services
         {
             var instruments = await investApiClientAdapter.GetInstrumentsAsync();
 
+            // Добавляем инструменты в БД
             foreach (var instrument in instruments)
                 await instrumentRepository.AddAsync(instrument);
 
-            await LoadLastPricesAsync(instruments);
+            // Удаляем облигации с истекшим сроком погашения
             await instrumentRepository.DeleteOldBondsAsync();
 
-            instruments = await instrumentRepository.GetInstrumentsAsync();
-            var bonds = instruments!.Where(x => x.Type == KnownInstrumentTypes.Bond).ToList();
-            var emitents = await emitentRepository.GetEmitentsAsync();
+            // Устанавливаем рейтинг облигаций
+            await SetBondRatingAsync();
 
-            foreach (var bond in bonds)
-            {
-                await instrumentRepository.SetActiveFlagAsync(bond.Id, false);
+            // Отмечаем облигации с хорошим рейтингом и с постоянным купоном
+            await SetActiveBondAsync();
 
-                if (await InstrumentIsMatchAsync(bond))
-                    await instrumentRepository.SetActiveFlagAsync(bond.Id, true);
-            }
-
-            async Task<bool> InstrumentIsMatchAsync(Instrument instrument)
-            {
-                foreach (var emitent in emitents)
-                {
-                    var keyWords = emitent.KeyWord!.Split(';').ToList();
-
-                    foreach (var keyWord in keyWords)
-                    {
-                        if (instrument.Name.Contains(keyWord))
-                        {
-                            await instrumentRepository.SetRatingAsync(instrument.Id, emitent.Rating ?? string.Empty);
-                            return true;
-                        }
-                    }
-                }
-
-                return false;
-            }
+            // Загружаем последние цены инструментов
+            await LoadLastPricesAsync();
         }
 
-        private async Task LoadLastPricesAsync(List<Instrument> instruments)
+        private async Task LoadLastPricesAsync()
         {
-            var instrumentIds = instruments.Select(x => x.InstrumentId).ToList();
+            var instruments = (await instrumentRepository.GetInstrumentsAsync()) ?? [];
+
+            List<string> instrumentTypes = [KnownInstrumentTypes.Share, KnownInstrumentTypes.Bond];
+
+            var instrumentIds = instruments
+                .Where(x => x.IsActive)
+                .Where(x => instrumentTypes.Contains(x.Type))
+                .Select(x => x.InstrumentId).ToList();
+            
             var prices = await investApiClientAdapter.GetLastPricesAsync(instrumentIds);
 
             for (var i = 0; i < prices.Count; i++)
             {
                 instruments[i].LastPrice = instruments[i].Type == KnownInstrumentTypes.Bond ? instruments[i].Nominal * prices[i] / 100.0 : prices[i];
                 await instrumentRepository.AddAsync(instruments[i]);
+            }
+        }
+
+        private async Task SetBondRatingAsync()
+        {
+            var instruments = (await instrumentRepository.GetInstrumentsAsync()) ?? [];
+            var bonds = instruments.Where(x => x.Type == KnownInstrumentTypes.Bond).ToList();
+            var emitents = await emitentRepository.GetEmitentsAsync();
+
+            foreach (var bond in bonds)                
+                foreach (var emitent in emitents)
+                {
+                    var keyWords = emitent.KeyWord!.Split(';').ToList();
+
+                    foreach (var keyWord in keyWords)
+                        if (bond.Name.Contains(keyWord))
+                            await instrumentRepository.SetRatingAsync(bond.Id, emitent.Rating ?? string.Empty);
+                }
+        }
+
+        private async Task SetActiveBondAsync()
+        {
+            var instruments = (await instrumentRepository.GetInstrumentsAsync()) ?? [];
+            var bonds = instruments.Where(x => x.Type == KnownInstrumentTypes.Bond).ToList();
+
+            foreach (var bond in bonds)
+                await instrumentRepository.SetActiveFlagAsync(bond.Id, false);
+
+            List<string> goodRatings = ["AAA", "AA"];
+
+            foreach (var bond in bonds)
+            {
+                bool maturityDateCondition = bond.MaturityDate >= DateOnly.FromDateTime(DateTime.Today.AddYears(2));
+                bool ratingCondition = goodRatings.Contains(bond.Rating ?? string.Empty);
+                bool notFloatingCouponCondition = bond.FloatingCouponFlag.HasValue && !bond.FloatingCouponFlag.Value;
+
+                if (maturityDateCondition && ratingCondition && notFloatingCouponCondition)
+                    await instrumentRepository.SetActiveFlagAsync(bond.Id, true);
             }
         }
     }
