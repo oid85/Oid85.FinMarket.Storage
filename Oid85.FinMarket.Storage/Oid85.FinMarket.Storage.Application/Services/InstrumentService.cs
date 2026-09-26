@@ -96,8 +96,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
             // Отмечаем облигации с хорошим рейтингом и с постоянным купоном
             await SetActiveBondAsync();
 
-            // Загружаем последние цены инструментов
-            
+            // Загружаем последние цены инструментов            
             await LoadLastPricesAsync();
         }
 
