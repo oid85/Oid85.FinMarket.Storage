@@ -102,12 +102,11 @@ namespace Oid85.FinMarket.Storage.Application.Services
 
         private async Task LoadLastPricesAsync()
         {
-            var instruments = (await instrumentRepository.GetInstrumentsAsync()) ?? [];
+            var instruments = (await instrumentRepository.GetActiveInstrumentsAsync()) ?? [];
 
             List<string> instrumentTypes = [KnownInstrumentTypes.Share, KnownInstrumentTypes.Bond];
 
             var instrumentIds = instruments
-                .Where(x => x.IsActive)
                 .Where(x => instrumentTypes.Contains(x.Type))
                 .Select(x => x.InstrumentId).ToList();
             
