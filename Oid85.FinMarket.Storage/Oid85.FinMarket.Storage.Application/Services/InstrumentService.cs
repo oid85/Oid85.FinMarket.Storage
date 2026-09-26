@@ -97,6 +97,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
             await SetActiveBondAsync();
 
             // Загружаем последние цены инструментов
+            
             await LoadLastPricesAsync();
         }
 
@@ -146,15 +147,23 @@ namespace Oid85.FinMarket.Storage.Application.Services
 
             List<string> goodRatings = ["AAA", "AA"];
 
-            foreach (var bond in bonds)
-            {
-                bool maturityDateCondition = bond.MaturityDate >= DateOnly.FromDateTime(DateTime.Today.AddYears(2));
-                bool ratingCondition = goodRatings.Contains(bond.Rating ?? string.Empty);
-                bool notFloatingCouponCondition = bond.FloatingCouponFlag.HasValue && !bond.FloatingCouponFlag.Value;
+            var filteredBonds = bonds
+                .Where(x => x.MaturityDate >= DateOnly.FromDateTime(DateTime.Today.AddYears(2)))
+                .Where(x => x.Rating is not null)
+                .Where(x => !string.IsNullOrEmpty(x.Rating))
+                .Where(x => goodRatings.Contains(x.Rating ?? string.Empty))
+                .Where(x => x.LastPrice is not null)
+                .Where(x => x.LastPrice > 0)
+                .Where(x => x.Nominal is not null)
+                .Where(x => x.Nominal == 1000.0)
+                .Where(x => x.Currency is not null)
+                .Where(x => string.Equals(x.Currency, "rub", StringComparison.InvariantCultureIgnoreCase))
+                .Where(x => x.FloatingCouponFlag.HasValue && !x.FloatingCouponFlag.Value)
+                .Where(x => x.CouponQuantityPerYear > 0)
+                .ToList();
 
-                if (maturityDateCondition && ratingCondition && notFloatingCouponCondition)
-                    await instrumentRepository.SetActiveFlagAsync(bond.Id, true);
-            }
+            foreach (var bond in filteredBonds)
+                await instrumentRepository.SetActiveFlagAsync(bond.Id, true);
         }
     }
 }
