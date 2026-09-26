@@ -43,7 +43,6 @@ namespace Oid85.FinMarket.Storage.Application.Services
         {
             var instruments = (await instrumentRepository.GetActiveInstrumentsAsync())?
                 .Where(x => x.Type == KnownInstrumentTypes.Bond)
-                .Where(x => x.MaturityDate >= DateOnly.FromDateTime(DateTime.Today))
                 .ToList();
 
             if (instruments is null)
