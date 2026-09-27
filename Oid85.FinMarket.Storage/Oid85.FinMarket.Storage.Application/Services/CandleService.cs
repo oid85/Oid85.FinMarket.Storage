@@ -73,6 +73,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
             var instruments = (await instrumentRepository.GetActiveInstrumentsAsync())?
                 .Where(x =>
                     x.Type == KnownInstrumentTypes.Share ||
+                    x.Type == KnownInstrumentTypes.Etf ||
                     x.Type == KnownInstrumentTypes.Index ||
                     (x.Type == KnownInstrumentTypes.Future && x.MaturityDate >= DateOnly.FromDateTime(DateTime.Today)))
                 .ToList();
