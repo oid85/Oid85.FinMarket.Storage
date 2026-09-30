@@ -104,17 +104,16 @@ namespace Oid85.FinMarket.Storage.Application.Services
         {
             var instruments = (await instrumentRepository.GetActiveInstrumentsAsync()) ?? [];
 
-            List<string> instrumentTypes = [KnownInstrumentTypes.Share, KnownInstrumentTypes.Bond];
-
-            var instrumentIds = instruments
-                .Where(x => instrumentTypes.Contains(x.Type))
-                .Select(x => x.InstrumentId).ToList();
+            var instrumentIds = instruments.Select(x => x.InstrumentId).ToList();
             
             var prices = await investApiClientAdapter.GetLastPricesAsync(instrumentIds);
 
             for (var i = 0; i < prices.Count; i++)
             {
-                instruments[i].LastPrice = instruments[i].Type == KnownInstrumentTypes.Bond ? instruments[i].Nominal * prices[i] / 100.0 : prices[i];
+                instruments[i].LastPrice = instruments[i].Type == KnownInstrumentTypes.Bond 
+                    ? instruments[i].Nominal * prices[i] / 100.0 
+                    : prices[i];
+                
                 await instrumentRepository.AddAsync(instruments[i]);
             }
         }
