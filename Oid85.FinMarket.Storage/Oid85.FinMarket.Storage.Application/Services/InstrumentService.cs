@@ -143,7 +143,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
             foreach (var bond in bonds)
                 await instrumentRepository.SetActiveFlagAsync(bond.Id, false);
 
-            List<string> goodRatings = ["AAA", "AA"];
+            List<string> goodRatings = ["AAA", "AA", "A"];
 
             var filteredBonds = bonds
                 .Where(x => x.MaturityDate >= DateOnly.FromDateTime(DateTime.Today))
