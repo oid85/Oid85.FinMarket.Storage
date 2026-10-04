@@ -146,7 +146,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
             List<string> goodRatings = ["AAA", "AA"];
 
             var filteredBonds = bonds
-                .Where(x => x.MaturityDate >= DateOnly.FromDateTime(DateTime.Today.AddYears(2)))
+                .Where(x => x.MaturityDate >= DateOnly.FromDateTime(DateTime.Today))
                 .Where(x => x.Rating is not null)
                 .Where(x => !string.IsNullOrEmpty(x.Rating))
                 .Where(x => goodRatings.Contains(x.Rating ?? string.Empty))
