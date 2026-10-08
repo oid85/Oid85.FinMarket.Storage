@@ -155,8 +155,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                 .Where(x => x.Nominal is not null)
                 .Where(x => x.Nominal == 1000.0)
                 .Where(x => x.Currency is not null)
-                .Where(x => string.Equals(x.Currency, "rub", StringComparison.InvariantCultureIgnoreCase))
-                .Where(x => (x.FloatingCouponFlag.HasValue && !x.FloatingCouponFlag.Value) || !x.FloatingCouponFlag.HasValue)
+                .Where(x => string.Equals(x.Currency, "rub", StringComparison.InvariantCultureIgnoreCase))                
                 .Where(x => x.CouponQuantityPerYear > 0)
                 .ToList();
 
