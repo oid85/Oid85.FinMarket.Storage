@@ -150,8 +150,6 @@ namespace Oid85.FinMarket.Storage.Application.Services
                 .Where(x => x.Rating is not null)
                 .Where(x => !string.IsNullOrEmpty(x.Rating))
                 .Where(x => goodRatings.Contains(x.Rating ?? string.Empty))
-                .Where(x => x.LastPrice is not null)
-                .Where(x => x.LastPrice > 0)
                 .Where(x => x.Nominal is not null)
                 .Where(x => x.Nominal == 1000.0)
                 .Where(x => x.Currency is not null)
