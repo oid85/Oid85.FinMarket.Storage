@@ -60,7 +60,8 @@ public class GetInstrumentsHelper(
             await Task.Delay(DelayInMilliseconds);
 
             List<TinkoffFuture> tinkoffInstruments = (await client.Instruments.FuturesAsync()).Instruments
-                .Where(x => x.CountryOfRisk.Equals(KnownCountryCodes.Ru, StringComparison.OrdinalIgnoreCase)).ToList();
+                .Where(x => x.CountryOfRisk.Equals(KnownCountryCodes.Ru, StringComparison.OrdinalIgnoreCase))
+                .ToList();
 
             var instruments = new List<Instrument>();
 
@@ -98,7 +99,6 @@ public class GetInstrumentsHelper(
 
             List<TinkoffBond> tinkoffInstruments = (await client.Instruments.BondsAsync()).Instruments
                 .Where(x => x.CountryOfRisk.Equals(KnownCountryCodes.Ru, StringComparison.OrdinalIgnoreCase))
-                .Where(x => x.RiskLevel == RiskLevel.Low || x.RiskLevel == RiskLevel.Moderate)
                 .ToList();
 
             var instruments = new List<Instrument>();
