@@ -18,34 +18,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Repositories
 
             var entity = await context.InstrumentEntities.FirstOrDefaultAsync(x => x.Ticker == instrument.Ticker);
 
-            if (entity is not null)
-            {
-                if (instrument.Nkd is not null)
-                    entity.Nkd = instrument.Nkd;
-
-                if (instrument.LastPrice is not null)
-                    entity.LastPrice = instrument.LastPrice;
-
-                if (instrument.Nominal is not null)
-                    entity.Nominal = instrument.Nominal;
-
-                if (instrument.Currency is not null)
-                    entity.Currency = instrument.Currency;
-
-                if (instrument.Lot is not null)
-                    entity.Lot = instrument.Lot;
-
-                if (instrument.Rating is not null)
-                    entity.Rating = instrument.Rating;
-
-                if (instrument.FloatingCouponFlag is not null)
-                    entity.FloatingCouponFlag = instrument.FloatingCouponFlag;
-
-                if (instrument.MaturityDate is not null)
-                    entity.MaturityDate = instrument.MaturityDate;
-            }
-
-            else
+            if (entity is null)
             {
                 entity = new InstrumentEntity
                 {
