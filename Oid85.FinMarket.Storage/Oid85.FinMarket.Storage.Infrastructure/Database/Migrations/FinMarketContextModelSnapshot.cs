@@ -18,7 +18,7 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("public")
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "10.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityAlwaysColumns(modelBuilder);
@@ -283,6 +283,9 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Migrations
 
                     b.Property<string>("Rating")
                         .HasColumnType("text");
+
+                    b.Property<double?>("StepPrice")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("Ticker")
                         .IsRequired()

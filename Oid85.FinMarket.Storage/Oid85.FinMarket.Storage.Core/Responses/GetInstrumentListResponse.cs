@@ -43,6 +43,11 @@
         public double? LastPrice { get; set; } = null;
 
         /// <summary>
+        /// Шаг цены
+        /// </summary>
+        public double? StepPrice { get; set; }
+
+        /// <summary>
         /// Номинал
         /// </summary>
         public double? Nominal { get; set; } = null;

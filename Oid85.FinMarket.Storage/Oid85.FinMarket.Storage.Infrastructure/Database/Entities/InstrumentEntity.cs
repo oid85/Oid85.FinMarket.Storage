@@ -55,6 +55,11 @@ namespace Oid85.FinMarket.Storage.Infrastructure.Database.Entities
         public double? LastPrice { get; set; }
 
         /// <summary>
+        /// Шаг цены
+        /// </summary>
+        public double? StepPrice { get; set; }
+
+        /// <summary>
         /// Номинал
         /// </summary>
         public double? Nominal { get; set; }

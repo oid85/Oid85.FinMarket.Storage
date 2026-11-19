@@ -44,6 +44,7 @@ namespace Oid85.FinMarket.Storage.Application.Services
                     Nkd = x.Nkd,
                     Nominal = x.Nominal,
                     LastPrice = x.LastPrice,
+                    StepPrice = x.StepPrice,
                     Currency = x.Currency,
                     Lot = x.Lot,
                     Rating = x.Rating,

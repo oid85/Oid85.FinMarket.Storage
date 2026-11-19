@@ -37,6 +37,7 @@ public class GetInstrumentsHelper(
                     Name = tinkoffInstrument.Name,
                     Currency = tinkoffInstrument.Currency,
                     Lot = tinkoffInstrument.Lot,
+                    StepPrice = ConvertHelper.QuotationToDouble(tinkoffInstrument.MinPriceIncrement),
                     Type = KnownInstrumentTypes.Share
                 };
 
