@@ -16,15 +16,12 @@ public static class ServiceCollectionExtensions
     {
         services.AddTransient<IInstrumentService, InstrumentService>();
         services.AddTransient<ICandleService, CandleService>();
-        services.AddTransient<IBondCouponService, BondCouponService>();
         services.AddTransient<IFundamentalParameterService, FundamentalParameterService>();
         services.AddTransient<IConsumerPriceIndexChangeService, ConsumerPriceIndexChangeService>();
         services.AddTransient<IMonetaryAggregateService, MonetaryAggregateService>();
         services.AddTransient<IKeyRateService, KeyRateService>();
         services.AddTransient<IVvpService, VvpService>();
         services.AddTransient<IEmitentService, EmitentService>();
-        services.AddTransient<IDividendService, DividendService>();
-        services.AddTransient<IForecastService, ForecastService>();
         services.AddTransient<IJobService, JobService>();
     }
 
@@ -38,9 +35,6 @@ public static class ServiceCollectionExtensions
 
         RegisterJob(KnownJobs.LoadInstruments, () => jobService.LoadInstrumentsAsync());
         RegisterJob(KnownJobs.LoadCandles, () => jobService.LoadCandlesAsync());
-        RegisterJob(KnownJobs.LoadBondCoupons, () => jobService.LoadBondCouponsAsync());
-        RegisterJob(KnownJobs.LoadDividendInfos, () => jobService.LoadDividendsAsync());
-        RegisterJob(KnownJobs.LoadForecastConsensuses, () => jobService.LoadForecastConsensusesAsync());
 
         void RegisterJob(string configurationSection, Expression<Func<Task>> methodCall)
         {

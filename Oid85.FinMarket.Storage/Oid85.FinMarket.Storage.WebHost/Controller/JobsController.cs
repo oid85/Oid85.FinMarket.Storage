@@ -32,44 +32,4 @@ public class JobsController(
         await jobService.LoadCandlesAsync();
         return Ok();
     }
-
-    /// <summary>
-    /// Загрузить купоны
-    /// </summary>
-    [HttpPost("load-bond-coupons")]
-    public async Task<IActionResult> LoadBondCouponsAsync()
-    {
-        await jobService.LoadBondCouponsAsync();
-        return Ok();
-    }
-
-    /// <summary>
-    /// Загрузить купоны
-    /// </summary>
-    [HttpPost("load-bond-coupons/{ticker}")]
-    public async Task<IActionResult> LoadBondCouponsAsync(string ticker)
-    {
-        await jobService.LoadBondCouponsAsync(ticker);
-        return Ok();
-    }
-
-    /// <summary>
-    /// Загрузить дивиденды
-    /// </summary>
-    [HttpPost("load-dividends")]
-    public async Task<IActionResult> LoadDividendsAsync()
-    {
-        await jobService.LoadDividendsAsync();
-        return Ok();
-    }
-
-    /// <summary>
-    /// Загрузить прогнозы
-    /// </summary>
-    [HttpPost("load-forecasts")]
-    public async Task<IActionResult> LoadForecastConsensusesAsync()
-    {
-        await jobService.LoadForecastConsensusesAsync();
-        return Ok();
-    }
 }
